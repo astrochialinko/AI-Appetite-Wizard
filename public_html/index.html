@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CookMe</title>
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-  </head>
-  <body></body>
+<!doctype html>
+<!-- Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ CSS 337 Final project   "AI App Wiz"
+html portion of the login/new user page 
+-->
+<html lang = "en-US">
+<head>
+<meta charset="utf-8">
+<!--The sauce that makes the whole thing moble  v v v -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>AI Appetite Wizard</title>
+<link href="./style.css" rel="stylesheet" type="text/css">
+<script src="./script.js"></script> 
+</head>
+
+<body>
+	<div id = "navBar"> </div>
+	<div id = "content">
+		<div class= "Panel">
+			<h1>Login</h1>
+			<label id="userLabel" class="inputUser" for="newUser">Username</label>
+			<input type= "text" id="userID" class="inputUser" required>
+
+			<label id="passLabel"  class="inputUser" for="newPass">Password: *<sub>(must be 8+ char, 1 #, and a special char.)</sub></label>
+			<input type="password" id="passID" class="inputUser" required >
+			<a href="#" id = "submitUser" class= "buttom" onclick = "userLogin()" >Login</a> 
+			<p id="loginWarnings"></p>
+		</div>
+		<div class= "Panel">
+			<h1>Create Account</h1>
+			<label id="newUserLabel" class="inputUser" for="newUser">New User</label>
+			<input type= "text" id="newUser" class="inputUser" required>
+
+			<label id="newPassLabel"  class="inputUser" for="newPass">Password: *<sub>(must be 8+ char, 1 #, and a special char.)</sub></label>
+			<input type="password" id="newPass" class="inputUser" required >
+			<a href="#" id = "createUser" class= "buttom" onclick = "createUser()" >Create</a> 
+			<p id="newUserWarnings"></p> </div>
+		</div>
+</body>
 </html>
