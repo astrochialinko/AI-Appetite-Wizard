@@ -1,5 +1,7 @@
 /* CSS Document */
-/*
+/*Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ CSC 337 Final project   "AI App Wiz"
+
 #356767 steal blue for fonts
 Fresh color	 palette    
 							technical names 
@@ -70,11 +72,11 @@ sub {
 }
 .Panel {
 	position: static;
-	left: 20%;
-	right: 80%;
 	padding: .8em;
-	margin: 4em;
+	margin: 2.6em;
+	margin-left: 4em;
 	background: #b6ffed;
-	border: solid thick #FFF7C6;
-	border-radius: 5% 1% ;
+	border: solid 0.8em #FFF7C6;
+	border-radius: 12% 2%;
+	overflow: auto;
 }

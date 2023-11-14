@@ -1,8 +1,13 @@
-// JavaScript AI App Wiz 
+/*
+	Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ 	CSC 337 Final project   "AI App Wiz"
+	
+	Javascript for login and new user.
+*/
 
 
 const local = "http://localhost:80/"
-//"http://:80/" swap this for local when ready to used Dig-Ocean
+//"http:/xxx.xxx.xxx.xxx/:80/" swap this for local when ready to used Dig-Ocean
 const urlRoot = local
 
 
