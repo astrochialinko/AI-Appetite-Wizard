@@ -1,4 +1,4 @@
-# CookMe
+# AI Appetite Wizard
 
 A recipe website that offers personalized recipe suggestions based on users' available ingredients
 - CSC 337 Final Project (Fall 2023)
@@ -23,7 +23,7 @@ CookMe
     ├── public_html/
     │     ├── index.html
     │     ├── style.css
-    │     └── code.js
+    │     └── script.js
     └── server.js
 ```  
 ## Reference
