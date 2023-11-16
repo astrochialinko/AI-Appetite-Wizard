@@ -1,0 +1,22 @@
+{
+  "name": "Stir-Fried Tofu with Vegetables",
+  "short_description": "A quick and flavorful stir-fry featuring tofu, colorful vegetables, and a savory soy sauce.",
+  "long_description": "Stir-Fried Tofu with Vegetables is a delicious and nutritious dish that combines tofu, bell peppers, carrots, and broccoli in a savory soy sauce. Quick and easy, it's perfect for a weeknight dinner.",
+  "ingredients": [
+    "1 block Tofu (extra-firm)",
+    "3 tbsp Soy sauce",
+    "2 Bell peppers, sliced",
+    "2 Carrots, julienned",
+    "1 cup Broccoli, florets",
+    "2 cloves Garlic, minced",
+    "1 tsp Ginger, grated"
+  ],
+  "instructions": [
+    "Press tofu to remove excess water.",
+    "Stir-fry tofu, garlic, and ginger in soy sauce.",
+    "Add sliced vegetables and cook until tender."
+  ],
+  "cook_time": "20 minutes",
+  "difficulty": "Easy"
+  "images":"StirFriedTofuVeg.png"
+}

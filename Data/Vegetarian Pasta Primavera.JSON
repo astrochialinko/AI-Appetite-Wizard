@@ -1,0 +1,23 @@
+{
+  "name": "Vegetarian Pasta Primavera",
+  "short_description": "A colorful and flavorful pasta dish with a variety of fresh vegetables.",
+  "long_description": "Vegetarian Pasta Primavera is a delightful combination of pasta and vibrant vegetables sautéed to perfection. The dish is finished with a touch of Parmesan cheese and fresh basil, creating a satisfying and nutritious meal.",
+  "ingredients": [
+    "8 oz Pasta",
+    "2 tbsp Olive oil",
+    "3 cloves Garlic, minced",
+    "2 Tomatoes, diced",
+    "2 Bell peppers, sliced",
+    "2 Carrots, julienned",
+    "1/2 cup Parmesan cheese, grated",
+    "1/4 cup Basil, fresh, chopped"
+  ],
+  "instructions": [
+    "Cook pasta according to package instructions.",
+    "In a pan, sauté garlic in olive oil, add vegetables and cook until tender.",
+    "Toss with cooked pasta, Parmesan cheese, and fresh basil."
+  ],
+  "cook_time": "25 minutes",
+  "difficulty": "Easy",
+  "images":"VegPastaPrimavera.png"
+}
