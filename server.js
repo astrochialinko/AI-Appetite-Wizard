@@ -127,6 +127,106 @@ app.get("/get/recipes/:ingredients", (req, res) => {
   });
 });
 
+// GET request for recipes that exactly match the user's pantry
+app.get("/get/recipes/match-strict/:username", req, res => {
+  const username = req.params.username;
+
+  // Find the user in the database
+  let p = Users.findOne({username: {$regex: new RegExp("^" + username.toLowerCase(), "i")}}).exec();
+
+  // Send the recipes
+  p.then((user) => {
+    
+    // Find the recipes in the database, $all is used to match all ingredients, $size is used to ensure array lengths are the same size
+    let p1 = Recipes.find({ingredients: {$all: user.pantry, $size: user.pantry.length}}).exec();
+    p1.then((recipes) => {
+      res.send(recipes);
+    }).catch((err) => {
+      console.log(err);
+      console.log("There was an issue getting the recipes");
+    });
+  }).catch((err) => {
+    console.log(err);
+    console.log("There was an issue getting the user");
+  });
+});
+
+// GET request for recipes with one or two missing ingredients
+app.get("/get/recipes/match-relaxed/:username", req, res => {
+  const username = req.params.username;
+
+  // Find the user in the database
+  let p = Users.findOne({username: {$regex: new RegExp("^" + username.toLowerCase(), "i")}}).exec();
+
+  /*
+    Send the recipes
+    This is a bit more complex than the other requests, and I'm not sure if this is the most effecient way to do it
+    The idea is to fetch all recipes from the database, then filter out the recipes with one or two missing ingredients.
+  */
+  p.then((user) => {
+    let p1 = Recipes.find({}).exec();
+    p1.then((recipes) => {
+      
+      // Create an array to hold the recipes that match the criteria
+      let filteredRecipes = [];
+
+      // Iterate through all the recipes
+      recipes.forEach((recipe) => {
+        let missingIngredients = 0;
+
+        // Iterate through all the ingredients in the recipe
+        recipe.ingredients.forEach((ingredient) => {
+          if (!user.pantry.includes(ingredient)) {
+            missingIngredients++;
+          }
+        });
+
+        // If the recipe only has one or two missing ingredients, add it to the array
+        if (missingIngredients <= 2) {
+          filteredRecipes.push(recipe);
+        }
+      });
+      res.send(filteredRecipes);
+    }).catch((err) => {
+      console.log(err);
+      console.log("There was an issue getting the recipes");
+    });
+  }).catch((err) => {
+    console.log(err);
+    console.log("There was an issue getting the user");
+  });
+});
+
+// GET request to browse all recipes
+app.get("/get/recipes/browse", req, res => {
+  // Fetch all recipes
+  let p = Recipes.find({}).exec();
+
+  // Send the recipes
+  p.then((recipes) => {
+    res.send(recipes);
+  }).catch((err) => {
+    console.log(err);
+    console.log("There was an issue getting the recipes");
+  });
+});
+
+// GET request to get a specific recipe
+app.get("/get/recipes/:term", req, res => {
+  const term = req.params.term;
+
+  // Find the recipe in the database
+  let p = Recipes.find({name: {$regex: new RegExp("^" + term.toLowerCase(), "i")}}).exec();
+
+  // Send the recipe
+  p.then((recipe) => {
+    res.send(recipe);
+  }).catch((err) => {
+    console.log(err);
+    console.log("There was an issue getting the recipe");
+  });
+});
+
 /**
  * Starts the server on a specified port.
  */
