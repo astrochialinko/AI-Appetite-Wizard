@@ -16,7 +16,7 @@
     "Stir-fry tofu, garlic, and ginger in soy sauce.",
     "Add sliced vegetables and cook until tender."
   ],
-  "cook_time": "20 minutes",
-  "difficulty": "Easy"
-  "images":"StirFriedTofuVeg.png"
+  "cookTime": 20,
+  "difficulty": 1,
+  "images": "StirFriedTofuVeg.png"
 }
