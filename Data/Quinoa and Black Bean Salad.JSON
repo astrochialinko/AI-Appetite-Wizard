@@ -16,7 +16,7 @@
     "Cook quinoa and let it cool.",
     "Mix with black beans, corn, diced tomatoes, lime juice, cumin, olive oil, and chopped cilantro."
   ],
-  "cook_time": "30 minutes",
-  "difficulty": "Easy"
-  "images":"QuinoaBBSalad.png"
+  "cook_Time": 30,
+  "difficulty": 1,
+  "images": "QuinoaBBSalad.png"
 }
