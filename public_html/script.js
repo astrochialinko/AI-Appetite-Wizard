@@ -7,7 +7,7 @@
 
 
 const local = "http://localhost:80/"
-//"http:/xxx.xxx.xxx.xxx/:80/" swap this for local when ready to used Dig-Ocean
+//"http:/146.190.45.141:80/" swap this for local when ready to used Dig-Ocean
 const urlRoot = local
 
 
