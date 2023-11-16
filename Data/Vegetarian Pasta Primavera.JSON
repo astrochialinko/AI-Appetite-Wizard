@@ -17,7 +17,7 @@
     "In a pan, sauté garlic in olive oil, add vegetables and cook until tender.",
     "Toss with cooked pasta, Parmesan cheese, and fresh basil."
   ],
-  "cook_time": "25 minutes",
-  "difficulty": "Easy",
-  "images":"VegPastaPrimavera.png"
+  "cookTime": 25,
+  "difficulty": 1,
+  "images": "VegPastaPrimavera.png"
 }
