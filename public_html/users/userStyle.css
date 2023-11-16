@@ -1,0 +1,33 @@
+/* CSS Document */
+/*Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ CSC 337 Final project   "AI App Wiz"
+This is the user CSS any addtional code used for 
+users can be found here. 
+
+#356767 steal blue for fonts
+Fresh color	 palette    
+							technical names 
+Blueist blue 	 #7CDEDF		Middle Blue
+Lighter blue 	 #B7F7F7		Diamond
+White blue   	 #EBFFFD		Bubbles
+Light yellow 	 #FFF7C6		Lemon Chiffon
+Yellowist    	 #FDE896		Flavescent
+
+Fresh Fresh color palette (floracesnt) 
+good for shadows and highlights
+#00dae3		rgba(0,218,227)			blue
+#64fcc9		rgba(100,252,201)		green
+#b6ffed		rgba(182,255,237)		light blue
+#e3ff3f		rgba(227,255,63)		yellow
+#f8b62d		rgba(248,182,45)		orange
+*/
+
+.Panel {
+	position: static;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: flex-start;
+	align-items: baseline;
+}
+
