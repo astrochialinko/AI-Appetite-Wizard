@@ -1,0 +1,24 @@
+{
+  "name": "Homemade Bread",
+  "short_description": "A classic recipe for making delicious homemade bread.",
+  "long_description": "Homemade Bread is a timeless recipe that yields a warm, crusty loaf with a soft interior. With simple ingredients like flour, yeast, and olive oil, this bread is perfect for sandwiches or as a side to your favorite meals.",
+  "ingredients": [
+    "4 cups Flour",
+    "2 1/4 tsp Yeast (or one packet)",
+    "1 tbsp Sugar",
+    "1 1/2 tsp Salt",
+    "2 tbsp Olive oil"
+  ],
+  "instructions": [
+    "Combine flour, yeast, sugar, and salt.",
+    "Add water and olive oil.",
+    "Knead the dough until smooth, then let it rise.",
+    "Shape the dough, let it rise again, and bake until golden brown."
+  ],
+  "cookTime": 120,
+  "difficulty": 2,
+  "images": [
+    "HomemadeBread1.png",
+    "HomemadeBread2.png"
+]
+}

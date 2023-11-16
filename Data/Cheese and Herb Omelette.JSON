@@ -1,0 +1,24 @@
+{
+  "name": "Cheese and Herb Omelette",
+  "short_description": "A classic omelette filled with cheese and fresh herbs.",
+  "long_description": "Cheese and Herb Omelette is a classic breakfast option that features fluffy eggs filled with melted cheese and a medley of fresh herbs. This quick and customizable dish is perfect for a hearty and satisfying breakfast.",
+  "ingredients": [
+    "3 Eggs",
+    "1/2 cup Cheese, shredded",
+    "Herbs (such as chives or parsley, 2 tbsp, chopped)",
+    "1/4 tsp Salt",
+    "1/8 tsp Pepper"
+  ],
+  "instructions": [
+    "Whisk eggs and season with salt and pepper.",
+    "Pour into a hot, greased pan.",
+    "Add cheese and herbs.",
+    "Cook until the eggs are set, then fold and serve."
+  ],
+  "cookTime": 15,
+  "difficulty": 1,
+  "images": [
+    "CheeseOmelette1.png",
+    "CheeseOmelette2.png"
+]
+}
