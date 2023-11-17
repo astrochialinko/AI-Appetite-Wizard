@@ -65,11 +65,7 @@ app.post("/pantry/addingredient", (req, res) => {
   const ingredient = req.body.ingredient;
 
   // Find the user in the database
-  let p = Users.find({
-    username: {
-      $regex: new RegExp("^" + req.params.username.toLowerCase(), "i"),
-    },
-  }).exec();
+  let p = Users.find({username: {$regex: new RegExp("^" + username, "i")}}).exec();
 
   // Add the ingredient to the user's pantry
   p.then((user) => {
@@ -86,11 +82,7 @@ app.get("/pantry/:username", (req, res) => {
   const username = req.params.username;
 
   // Find the user in the database
-  let p = Users.find({
-    username: {
-      $regex: new RegExp("^" + req.params.username.toLowerCase(), "i"),
-    },
-  }).exec();
+  let p = Users.find({username: {$regex: new RegExp("^" + username, "i")}}).exec();
 
   // Send the user's pantry
   p.then((user) => {
@@ -132,7 +124,7 @@ app.get("/get/recipes/match-strict/:username", req, res => {
   const username = req.params.username;
 
   // Find the user in the database
-  let p = Users.findOne({username: {$regex: new RegExp("^" + username.toLowerCase(), "i")}}).exec();
+  let p = Users.findOne({username: {$regex: new RegExp("^" + username, "i")}}).exec();
 
   // Send the recipes
   p.then((user) => {
@@ -156,7 +148,7 @@ app.get("/get/recipes/match-relaxed/:username", req, res => {
   const username = req.params.username;
 
   // Find the user in the database
-  let p = Users.findOne({username: {$regex: new RegExp("^" + username.toLowerCase(), "i")}}).exec();
+  let p = Users.findOne({username: {$regex: new RegExp("^" + username, "i")}}).exec();
 
   /*
     Send the recipes
@@ -216,7 +208,7 @@ app.get("/get/recipes/:term", req, res => {
   const term = req.params.term;
 
   // Find the recipe in the database
-  let p = Recipes.find({name: {$regex: new RegExp("^" + term.toLowerCase(), "i")}}).exec();
+  let p = Recipes.find({name: {$regex: new RegExp("^" + term, "i")}}).exec();
 
   // Send the recipe
   p.then((recipe) => {
