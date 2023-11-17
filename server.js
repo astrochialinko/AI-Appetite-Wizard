@@ -12,6 +12,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const parser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const crypto = require("crypto");
 
 const app = express();
 // const port = 3000;
@@ -57,7 +58,7 @@ let sessions = {};
 function addSession(username) {
   let sessionID = Math.floor(Math.random() * 1000000000);
   let now = Date.now();
-  sessions[username] = {id: sessionID, timestamp: now};
+  sessions[username] = { id: sessionID, timestamp: now };
   return sessionID;
 }
 
@@ -77,7 +78,7 @@ function removeSession() {
   We can change this at any point! Ten minutes seems good for now.
 */
 
-setInterval(removeSession, 600000);
+setInterval(removeSession, 600000); // 81
 
 // Middleware
 app.use(express.static("public_html"));
@@ -87,18 +88,20 @@ app.use(cookieParser());
 function authenticate(req, res, next) {
   let cookie = req.cookies;
   if (cookie != undefined && cookie.login != undefined) {
-    if (sessions[cookie.login] != undefined &&
-        sessions[cookie.login].id === cookie.sessionID) {
+    if (
+      sessions[cookie.login] != undefined &&
+      sessions[cookie.login].id === cookie.sessionID
+    ) {
       next();
     } else {
-      res.redirect('/index.html')
+      res.redirect("/index.html");
     }
   } else {
-    res.redirect('/index.html')
+    res.redirect("/index.html");
   }
 }
 
-app.use('/users/*', authenticate);
+app.use("/users/*", authenticate);
 
 /**
  * The following requests involve ingredient management
@@ -113,7 +116,9 @@ app.post("/pantry/addingredient", (req, res) => {
   const ingredient = req.body.ingredient;
 
   // Find the user in the database
-  let p = Users.find({username: {$regex: new RegExp("^" + username, "i")}}).exec();
+  let p = Users.find({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
 
   // Add the ingredient to the user's pantry
   p.then((user) => {
@@ -130,7 +135,9 @@ app.get("/pantry/:username", (req, res) => {
   const username = req.params.username;
 
   // Find the user in the database
-  let p = Users.find({username: {$regex: new RegExp("^" + username, "i")}}).exec();
+  let p = Users.find({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
 
   // Send the user's pantry
   p.then((user) => {
@@ -172,13 +179,16 @@ app.get("/get/recipes/match-strict/:username", (req, res) => {
   const username = req.params.username;
 
   // Find the user in the database
-  let p = Users.findOne({username: {$regex: new RegExp("^" + username, "i")}}).exec();
+  let p = Users.findOne({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
 
   // Send the recipes
   p.then((user) => {
-    
     // Find the recipes in the database, $all is used to match all ingredients, $size is used to ensure array lengths are the same size
-    let p1 = Recipes.find({ingredients: {$all: user.pantry, $size: user.pantry.length}}).exec();
+    let p1 = Recipes.find({
+      ingredients: { $all: user.pantry, $size: user.pantry.length },
+    }).exec();
     p1.then((recipes) => {
       res.send(recipes);
     }).catch((err) => {
@@ -196,7 +206,9 @@ app.get("/get/recipes/match-relaxed/:username", (req, res) => {
   const username = req.params.username;
 
   // Find the user in the database
-  let p = Users.findOne({username: {$regex: new RegExp("^" + username, "i")}}).exec();
+  let p = Users.findOne({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
 
   /*
     Send the recipes
@@ -206,7 +218,6 @@ app.get("/get/recipes/match-relaxed/:username", (req, res) => {
   p.then((user) => {
     let p1 = Recipes.find({}).exec();
     p1.then((recipes) => {
-      
       // Create an array to hold the recipes that match the criteria
       let filteredRecipes = [];
 
@@ -256,7 +267,9 @@ app.get("/get/recipes/:term", (req, res) => {
   const term = req.params.term;
 
   // Find the recipe in the database
-  let p = Recipes.find({name: {$regex: new RegExp("^" + term, "i")}}).exec();
+  let p = Recipes.find({
+    name: { $regex: new RegExp("^" + term, "i") },
+  }).exec();
 
   // Send the recipe
   p.then((recipe) => {
@@ -268,36 +281,41 @@ app.get("/get/recipes/:term", (req, res) => {
 });
 
 // This route creates a new user
-app.get('add/user', (req, res) => {
-  let username = req.body.username;
+app.post("/add/user", (req, res) => {
+  let username = req.body.userName;
   let password = req.body.password;
 
   // Check if the user already exists
-  let p = Users.find({username: {$regex: new RegExp("^" + username, "i")}}).exec();
+  let p = Users.find({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
   p.then((results) => {
     if (results.length > 0) {
-      res.end("That username is already taken");
+      res.status(403).end("That username is already taken");
     } else {
       let newSalt = Math.floor(Math.random() * 1000000000);
       let toHash = password + newSalt;
-      var hash = crypto.creatHash('sha3-256');
-      let data = hash.update(toHash, 'utf-8');
-      let newHash = data.digest('hex');
+      var hash = crypto.createHash("sha3-256");
+      let data = hash.update(toHash, "utf-8");
+      let newHash = data.digest("hex");
 
       let newUser = new Users({
         username: username,
         salt: newSalt,
         hash: newHash,
         favorites: [],
-        pantry: []
+        pantry: [],
       });
 
-      newUser.save().then((result) => {
-        res.end("User created!");
-      }).catch((err) => {
-        console.log(err);
-        res.end("Failed to create new account.");
-      });
+      newUser
+        .save()
+        .then((result) => {
+          res.end("User created!");
+        })
+        .catch((err) => {
+          console.log(err);
+          res.end("Failed to create new account.");
+        });
     }
   }).catch((err) => {
     console.log(err);
@@ -306,25 +324,26 @@ app.get('add/user', (req, res) => {
 });
 
 // This route logs in a user
-app.post('account/login', (req, res) => {
+app.post("/account/login", (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
 
   // Check if the user exists
-  let p = Users.find({username: {$regex: new RegExp("^" + username, "i")}}).exec();
+  let p = Users.find({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
   p.then((results) => {
     if (results.length >= 1) {
-
       let existingSalt = results[0].salt;
       let toHash = password + existingSalt;
-      var hash = crypto.creatHash('sha3-256');
-      let data = hash.update(toHash, 'utf-8');
-      let newHash = data.digest('hex');
+      var hash = crypto.createHash("sha3-256");
+      let data = hash.update(toHash, "utf-8");
+      let newHash = data.digest("hex");
 
       if (newHash === results[0].hash) {
         let sessionID = addSession(username);
-        res.cookie('login', username);
-        res.cookie('sessionID', sessionID);
+        res.cookie("login", username);
+        res.cookie("sessionID", sessionID);
         res.end("Login successful!" + JSON.stringify(results));
       } else {
         res.end("Incorrect password.");
