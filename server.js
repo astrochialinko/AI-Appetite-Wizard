@@ -168,7 +168,7 @@ app.get("/get/recipes/:ingredients", (req, res) => {
 });
 
 // GET request for recipes that exactly match the user's pantry
-app.get("/get/recipes/match-strict/:username", req, res => {
+app.get("/get/recipes/match-strict/:username", (req, res) => {
   const username = req.params.username;
 
   // Find the user in the database
@@ -192,7 +192,7 @@ app.get("/get/recipes/match-strict/:username", req, res => {
 });
 
 // GET request for recipes with one or two missing ingredients
-app.get("/get/recipes/match-relaxed/:username", req, res => {
+app.get("/get/recipes/match-relaxed/:username", (req, res) => {
   const username = req.params.username;
 
   // Find the user in the database
@@ -238,7 +238,7 @@ app.get("/get/recipes/match-relaxed/:username", req, res => {
 });
 
 // GET request to browse all recipes
-app.get("/get/recipes/browse", req, res => {
+app.get("/get/recipes/browse", (req, res) => {
   // Fetch all recipes
   let p = Recipes.find({}).exec();
 
@@ -252,7 +252,7 @@ app.get("/get/recipes/browse", req, res => {
 });
 
 // GET request to get a specific recipe
-app.get("/get/recipes/:term", req, res => {
+app.get("/get/recipes/:term", (req, res) => {
   const term = req.params.term;
 
   // Find the recipe in the database
