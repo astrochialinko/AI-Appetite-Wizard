@@ -11,6 +11,8 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const parser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
 const app = express();
 // const port = 3000;
 const port = 80;
@@ -41,16 +43,62 @@ var Recipes = mongoose.model("Recipes", recipeSchema);
 // Set up the schema for the users
 var userSchema = new mongoose.Schema({
   username: String,
-  password: String,
+  // password: String,
+  salt: String,
+  hash: String,
   favorites: [String],
   pantry: [String],
 });
 
 var Users = mongoose.model("Users", userSchema);
 
+let sessions = {};
+
+function addSession(username) {
+  let sessionID = Math.floor(Math.random() * 1000000000);
+  let now = Date.now();
+  sessions[username] = {id: sessionID, timestamp: now};
+  return sessionID;
+}
+
+function removeSession() {
+  let now = Date.now();
+  let usernames = Object.keys(sessions);
+  for (let i = 0; i < usernames.length; i++) {
+    let last = sessions[usernames[i]].timestamp;
+    if (last + 600000 < now) {
+      delete sessions[usernames[i]];
+    }
+  }
+}
+
+/*
+  This is currently set to remove sessions every ten minutes. 
+  We can change this at any point! Ten minutes seems good for now.
+*/
+
+setInterval(removeSession, 600000);
+
 // Middleware
 app.use(express.static("public_html"));
 app.use(parser.json());
+app.use(cookieParser());
+
+function authenticate(req, res, next) {
+  let cookie = req.cookies;
+  if (cookie != undefined && cookie.login != undefined) {
+    if (sessions[cookie.login] != undefined &&
+        sessions[cookie.login].id === cookie.sessionID) {
+      next();
+    } else {
+      res.redirect('/index.html')
+    }
+  } else {
+    res.redirect('/index.html')
+  }
+}
+
+app.use('/users/*', authenticate);
 
 /**
  * The following requests involve ingredient management
@@ -216,6 +264,77 @@ app.get("/get/recipes/:term", req, res => {
   }).catch((err) => {
     console.log(err);
     console.log("There was an issue getting the recipe");
+  });
+});
+
+// This route creates a new user
+app.get('add/user', (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  // Check if the user already exists
+  let p = Users.find({username: {$regex: new RegExp("^" + username, "i")}}).exec();
+  p.then((results) => {
+    if (results.length > 0) {
+      res.end("That username is already taken");
+    } else {
+      let newSalt = Math.floor(Math.random() * 1000000000);
+      let toHash = password + newSalt;
+      var hash = crypto.creatHash('sha3-256');
+      let data = hash.update(toHash, 'utf-8');
+      let newHash = data.digest('hex');
+
+      let newUser = new Users({
+        username: username,
+        salt: newSalt,
+        hash: newHash,
+        favorites: [],
+        pantry: []
+      });
+
+      newUser.save().then((result) => {
+        res.end("User created!");
+      }).catch((err) => {
+        console.log(err);
+        res.end("Failed to create new account.");
+      });
+    }
+  }).catch((err) => {
+    console.log(err);
+    res.end("Failed to create new account.");
+  });
+});
+
+// This route logs in a user
+app.post('account/login', (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  // Check if the user exists
+  let p = Users.find({username: {$regex: new RegExp("^" + username, "i")}}).exec();
+  p.then((results) => {
+    if (results.length >= 1) {
+
+      let existingSalt = results[0].salt;
+      let toHash = password + existingSalt;
+      var hash = crypto.creatHash('sha3-256');
+      let data = hash.update(toHash, 'utf-8');
+      let newHash = data.digest('hex');
+
+      if (newHash === results[0].hash) {
+        let sessionID = addSession(username);
+        res.cookie('login', username);
+        res.cookie('sessionID', sessionID);
+        res.end("Login successful!" + JSON.stringify(results));
+      } else {
+        res.end("Incorrect password.");
+      }
+    } else {
+      res.end("User not found.");
+    }
+  }).catch((err) => {
+    console.log(err);
+    res.end("Failed to log in.");
   });
 });
 

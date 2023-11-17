@@ -9,6 +9,10 @@
  */
 
 
+const local = "http://localhost:80/"
+//"http:/146.190.45.141:80/" swap this for local when ready to used Dig-Ocean
+const urlRoot = local
+
 /**
  * Function: addIngredient
  * Purpose:  This function will make a POST request to the server to add
@@ -24,7 +28,7 @@ function addIngredient() {
     var username = document.getElementById("username").value;
 
     // Change this when going live
-    let url = "http://localhost:80/pantry/addingredient";
+    let url = urlRoot + "pantry/addingredient";
 
     let p = fetch(url, {
         method: "POST",
@@ -33,9 +37,14 @@ function addIngredient() {
     });
 
     p.then((response) => {
-        window.alert("Ingredient added to pantry!");
+        if (response.ok) {
+            window.alert("Ingredient added to pantry!");
+        } else {
+            window.alert("Error adding ingredient to pantry. Server responded with status: " + response.status);
+        }
     }).catch((err) => {
         window.alert("Error adding ingredient to pantry.");
+        console.log(err);
     });
 }
 
@@ -54,7 +63,7 @@ function getPantry() {
     var username = document.getElementById("username").value;
 
     // Change this when going live
-    let url = "http://localhost:80/pantry/" + username;
+    let url = urlRoot + "pantry/" + username;
 
     let p = fetch(url, {
         method: "GET",
