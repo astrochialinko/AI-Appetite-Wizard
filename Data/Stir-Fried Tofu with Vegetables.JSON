@@ -18,5 +18,5 @@
   ],
   "cookTime": 20,
   "difficulty": 1,
-  "images": "StirFriedTofuVeg.png"
+  "images": ["StirFriedTofuVeg.png"]
 }
