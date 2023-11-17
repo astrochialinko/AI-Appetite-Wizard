@@ -20,7 +20,7 @@
     "Pour in beef broth and add potatoes and carrots.",
     "Simmer until beef and vegetables are tender."
   ],
-  "cookTime": 110
+  "cookTime": 110,
   "difficulty": 2,
   "images": [
     "BeefStew1.png",
