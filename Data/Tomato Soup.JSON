@@ -29,5 +29,5 @@
   ],
   "cookTime": 30,
   "difficulty": 1,
-  "images": "TomatoSoup.png"
+  "images": ["TomatoSoup.png"]
 }
