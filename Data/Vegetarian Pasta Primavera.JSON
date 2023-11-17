@@ -19,5 +19,5 @@
   ],
   "cookTime": 25,
   "difficulty": 1,
-  "images": "VegPastaPrimavera.png"
+  "images": ["VegPastaPrimavera.png"]
 }
