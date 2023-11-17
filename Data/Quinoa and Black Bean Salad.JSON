@@ -18,5 +18,5 @@
   ],
   "cookTime": 30,
   "difficulty": 1,
-  "images": "QuinoaBBSalad.png"
+  "images": ["QuinoaBBSalad.png"]
 }
