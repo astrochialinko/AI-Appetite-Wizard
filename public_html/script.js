@@ -62,19 +62,23 @@ function userLogin() {
     credentials: "include",
   })
     .then((response) => {
-      if (response.status === 403 || response.status === 404) {
-        return response.text().then((text) => {
-          document.getElementById("loginWwarnings").innerHTML = text;
-        });
-      } else if (response.ok) {
-        window.location.href = "/accounts/home.html";
+      return response.text();
+    })
+    .then((text) => {
+      if (text.startsWith("Login")) {
+        window.location.href = "/users/home.html";
+      } else if (text.startsWith("Incorrect")) {
+        document.getElementById("loginWarnings").innerText =
+          "Incorrect Password!";
+      } else if (text.startsWith("User not found.")) {
+        document.getElementById("loginWarnings").innerText = "User not found!";
       } else {
-        document.getElementById("loginWwarnings").innerHTML =
+        document.getElementById("loginWarnings").innerHTML =
           "Server returned an error:" + response.status;
       }
     })
     .catch((error) => {
-      document.getElementById("loginWwarnings").innerHTML = error;
+      document.getElementById("loginWarnings").innerHTML = error;
     });
 }
 //This function is intented to make sure the user is inputing valid username and password

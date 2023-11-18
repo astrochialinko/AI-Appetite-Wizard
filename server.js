@@ -325,7 +325,7 @@ app.post("/add/user", (req, res) => {
 
 // This route logs in a user
 app.post("/account/login", (req, res) => {
-  let username = req.body.username;
+  let username = req.body.userName;
   let password = req.body.password;
 
   // Check if the user exists
