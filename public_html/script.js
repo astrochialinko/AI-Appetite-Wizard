@@ -7,7 +7,7 @@
 
 const local = "http://localhost:80/";
 //"http:/146.190.45.141:80/" swap this for local when ready to used Dig-Ocean
-const urlRoot = local;
+const urlRoot = "http:/146.190.45.141:80/";
 
 /* New user is called when client clicks the new user button. 
 from here the  fuction sends a post request to the server
