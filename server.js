@@ -22,7 +22,7 @@ const port = 80;
 const db = mongoose.connection;
 // const mongoDBURL = "mongodb://127.0.0.1/aiapetite";
 const mongoDBURL = "mongodb://127.0.0.1:27017/aiapetite";
-mongoose.connect(mongoDBURL, { useNewUrlParser: true });
+mongoose.connect(mongoDBURL);
 db.on("error", () => {
   console.log("MongoDB connection error");
 });
@@ -265,8 +265,9 @@ app.get("/get/recipes/:ingredients", (req, res) => {
     console.log("There was an issue getting the recipes");
   });
 });
+
 // GET request to get a specific recipe
-app.get("/get/recipes/:term", (req, res) => {
+app.get("/search/recipes/:term", (req, res) => {
   const term = req.params.term;
 
   // Find the recipe in the database
