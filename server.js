@@ -158,21 +158,7 @@ app.get("/pantry/:username", (req, res) => {
  * A GET request to get a specific recipe
  */
 
-// GET request for recipes based on ingredients
-app.get("/get/recipes/:ingredients", (req, res) => {
-  const ingredients = req.params.ingredients.split(",");
 
-  // Find the recipes in the database
-  let p = Recipes.find({ ingredients: { $in: ingredients } }).exec();
-
-  // Send the recipes
-  p.then((recipes) => {
-    res.send(recipes);
-  }).catch((err) => {
-    console.log(err);
-    console.log("There was an issue getting the recipes");
-  });
-});
 
 // GET request for recipes that exactly match the user's pantry
 app.get("/get/recipes/match-strict/:username", (req, res) => {
@@ -262,6 +248,23 @@ app.get("/get/recipes/browse", (req, res) => {
   });
 });
 
+//This will be the same path as the next app.get we should change them because of that. 
+
+// GET request for recipes based on ingredients
+app.get("/get/recipes/:ingredients", (req, res) => {
+  const ingredients = req.params.ingredients.split(",");
+
+  // Find the recipes in the database
+  let p = Recipes.find({ ingredients: { $in: ingredients } }).exec();
+
+  // Send the recipes
+  p.then((recipes) => {
+    res.send(recipes);
+  }).catch((err) => {
+    console.log(err);
+    console.log("There was an issue getting the recipes");
+  });
+});
 // GET request to get a specific recipe
 app.get("/get/recipes/:term", (req, res) => {
   const term = req.params.term;
