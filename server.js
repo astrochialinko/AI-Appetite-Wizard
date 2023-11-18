@@ -252,10 +252,10 @@ app.get("/get/recipes/browse", (req, res) => {
 
 // GET request for recipes based on ingredients
 app.get("/get/recipes/:ingredients", (req, res) => {
-  const ingredients = req.params.ingredients.split(",");
+  const ingredient = req.params.ingredients
 
   // Find the recipes in the database
-  let p = Recipes.find({ ingredients: { $in: ingredients } }).exec();
+  let p = Recipes.find({ ingredients: { $regex: new RegExp(ingredient, "i") } }).exec();
 
   // Send the recipes
   p.then((recipes) => {
@@ -272,7 +272,7 @@ app.get("/search/recipes/:term", (req, res) => {
 
   // Find the recipe in the database
   let p = Recipes.find({
-    name: { $regex: new RegExp("^" + term, "i") },
+    name: { $regex: new RegExp(term, "i") },
   }).exec();
 
   // Send the recipe
