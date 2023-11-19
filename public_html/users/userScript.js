@@ -7,8 +7,9 @@
 
 
 const local = "http://localhost:80/"
+const live = "http:/146.190.45.141:80/"
 //"http:/146.190.45.141:80/" swap this for local when ready to used Dig-Ocean
-const urlRoot = "http:/146.190.45.141:80/" 
+const urlRoot = live
 
 
 /*This funtion will be called when open pantry is click on the 

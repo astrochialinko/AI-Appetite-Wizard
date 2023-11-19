@@ -16,6 +16,7 @@ html portion of the user pages
 </head>
 
 <body>
+	
 	<div id = "navBar"> 
 		<a href="#" class="navLinks" id = "home">Home</a>
 		<a href="#" class="navLinks" id = "bookshelf">BookShelf</a>
@@ -26,19 +27,21 @@ html portion of the user pages
 
 	</div>
 	<div id = "content">
-		<span class= "Panel">
-			<h1>My Favorites</h1>
-			<a href="#" id = "submitUser" class= "buttom" onclick = "userLogin()" >Favorites</a>
-			<!-- We might choose to populated this like book shelf with just favorites 
-			 
-			<p id="loginWarnings"></p>-->
-			<p id="favortie "></p>
+		<span id= "searchFilterBar" ><!--This is used to set filter, search options  -->
+			<input type= "text" id="search" class="searchBar" >
+			<a href="#" id = "searchBTN" class= "buttom searchBTNS" onclick = "search()" >Search</a>
+			<a href="#" id = "fliterBTN" class= "buttom searchBTNS" onclick = "filter()" >Filter</a>
+		</span>
+		<span id= "filterPanel" >
+			<form action="/search/filtered" method= "get"><!-- action need to be updated to match server.-->
+				<table></table>
+			</form>
 		</span>
 		<span class= "Panel">
-			<h1>My Pantry</h1>
+			<h1>Recipies</h1>
+			 <!--window.onload().      populate recies -->
 			
-			<a href="#" id = "createUser" class= "buttom" onclick = "openPantry()" >Open Pantry</a> 
-			<p id="newUserWarnings"></p> 
+			<p id="favortie "></p>
 		</span>
 	</div>
 </body>

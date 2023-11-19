@@ -95,3 +95,33 @@ sub {
 	font-family: "Impact", "Haettenschweiler", "Franklin Gothic Bold", "Arial Black", "sans-serif";
 	color: black;
 }
+
+#searchFilterBar {
+	position: fixed;
+	top: 0%;
+	right: 0%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: nowrap;
+	width: 90%;
+	height: 2em;
+	background: linear-gradient(#f8b62d, #FDE896);
+}
+
+.searchBTNS {
+	padding top: 0em;
+	margin-top: 0.2em;
+	
+}
+
+#filterPanel {
+	position: absolute;
+	top: -16em;
+	left: -18em;
+	background: rgba(248,182,45,.6);
+	border: solid 20em rgba(134,134,134,0.4);
+	height: 90%;
+	width: 90%;
+	display: none;
+}
