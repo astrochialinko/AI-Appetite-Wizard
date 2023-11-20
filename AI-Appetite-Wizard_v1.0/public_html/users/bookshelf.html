@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ CSC 337 Final project   "AI App Wiz"
+html portion of the user pages  
+-->
+<html lang = "en-US">
+<head>
+<meta charset="utf-8">
+<!--The sauce that makes the whole thing moble  v v v -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>AI Appetite Wizard</title>
+<link rel="icon" type="image/x-icon" href="../WizHat.png">
+<link href="./userStyle.css" rel="stylesheet" type="text/css">
+<link href="../style.css" rel="stylesheet" type="text/css">
+<script src="./userScript.js"></script> 
+</head>
+
+<body>
+	
+	<div id = "navBar"> 
+		<a href="./home.html" class="navLinks" id = "home">Home</a>
+		<a href="#" class="navLinks" id = "bookshelf">BookShelf</a>
+		<a href="#" class="navLinks" id = "user">Profile</a>
+		<a href="#" class="navLinks" id = "about">about</a>
+		<a href="#" class="navLinks" id = "help">help</a>
+		<a href="#" class="navLinks" id = "login">login</a>
+
+	</div>
+	<div id = "content">
+		<span id= "searchFilterBar" ><!--This is used to set filter, search options  -->
+			<input type= "text" id="search" class="searchBar" >
+			<a href="#" id = "searchBTN" class= "buttom searchBTNS" onclick = "search()" >Search</a>
+			<a href="#" id = "fliterBTN" class= "buttom searchBTNS" onclick = "filter()" >Filter</a>
+		</span>
+		<span id= "filterPanel" >
+			<form action="/search/filtered" method= "get"><!-- action need to be updated to match server.-->
+				<table></table>
+			</form>
+		</span>
+		<span class= "Panel">
+			<h1>Recipies</h1>
+			 <!--window.onload().      populate recies -->
+			
+			<p id="favortie "></p>
+		</span>
+	</div>
+</body>
+</html>

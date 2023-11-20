@@ -1,0 +1,45 @@
+<!doctype html>
+<!-- Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ CSC 337 Final project   "AI App Wiz"
+html portion of the user pages  
+-->
+<html lang = "en-US">
+<head>
+<meta charset="utf-8">
+<!--The sauce that makes the whole thing moble  v v v -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>AI Appetite Wizard</title>
+<link rel="icon" type="image/x-icon" href="../WizHat.png">
+<link href="./userStyle.css" rel="stylesheet" type="text/css">
+<link href="../style.css" rel="stylesheet" type="text/css">
+<script src="./userScript.js"></script> 
+</head>
+
+<body>
+	<div id = "navBar"> 
+		<a href="#" class="navLinks" id = "home">Home</a>
+		<a href="./bookshelf.html" class="navLinks" id = "bookshelf">BookShelf</a>
+		<a href="#" class="navLinks" id = "user">Profile</a>
+		<a href="#" class="navLinks" id = "about">about</a>
+		<a href="#" class="navLinks" id = "help">help</a>
+		<a href="#" class="navLinks" id = "login">login</a>
+
+	</div>
+	<div id = "content">
+		<span class= "Panel">
+			<h1>My Favorites</h1>
+			<a href="#" id = "submitUser" class= "buttom" onclick = "userLogin()" >Favorites</a>
+			<!-- We might choose to populated this like book shelf with just favorites 
+			 
+			<p id="loginWarnings"></p>-->
+			<p id="favortie "></p>
+		</span>
+		<span class= "Panel">
+			<h1>My Pantry</h1>
+			
+			<a href="#" id = "createUser" class= "buttom" onclick = "openPantry()" >Open Pantry</a> 
+			<p id="newUserWarnings"></p> 
+		</span>
+	</div>
+</body>
+</html>

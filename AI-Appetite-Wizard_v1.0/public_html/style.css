@@ -1,0 +1,127 @@
+/* CSS Document */
+/*Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ CSC 337 Final project   "AI App Wiz"
+
+#356767 steal blue for fonts
+Fresh color	 palette    
+							technical names 
+Blueist blue 	 #7CDEDF		Middle Blue
+Lighter blue 	 #B7F7F7		Diamond
+White blue   	 #EBFFFD		Bubbles
+Light yellow 	 #FFF7C6		Lemon Chiffon
+Yellowist    	 #FDE896		Flavescent
+
+Fresh Fresh color palette (floracesnt) 
+good for shadows and highlights
+#00dae3		rgba(0,218,227)			blue
+#64fcc9		rgba(100,252,201)		green
+#b6ffed		rgba(182,255,237)		light blue
+#e3ff3f		rgba(227,255,63)		yellow
+#f8b62d		rgba(248,182,45)		orange
+*/
+
+body {
+	margin: 0.2em;
+	background: #B7F7F7;
+	color:  #356767;
+	font-family: "Cambria", "Hoefler Text", "Liberation Serif", "Times", "Times New Roman", "serif";
+	
+}
+sub {
+	font-size: .56em
+}
+#navBar {/* Navigation bar */ 
+	position: absolute;
+	display: grid;
+	justify-content: space-evenly;
+	align-content: stretch;
+	align-items: center;
+	justify-items: end;
+	left: 0em;
+	width: 10%;
+	height: 100%;
+	background: #7CDEDF;
+	overflow: hidden;
+}
+
+
+#content {
+	position: fixed;
+	display: block;
+	right: 0;
+	width: 90%;
+	height: 100%;
+	/*border: solid thick;*/
+	margin: .2em;
+	margin-right: 1em;
+}
+.buttom {
+	display: block;
+	box-sizing: border-box;
+	width: 10.4em;
+	margin: .4em;
+	margin-top: 2em;
+	padding: .4em;
+	background: #FFF7C6;
+	text-decoration: none;
+	color: #356767;
+	border-radius: 90%;
+	text-align: center;
+}
+.buttom:active{
+	background: #f8b62d;
+	color: #b6ffed;
+	border-radius: 40%;
+}
+.inputUser {
+	display: block;
+}
+.Panel {
+	position: static;
+	padding: .8em;
+	margin: 2.6em;
+	margin-left: 4em;
+	background: #b6ffed;
+	border: solid 0.8em #FFF7C6;
+	border-radius: 12% 2%;
+	overflow: auto;
+}
+
+.navLinks {
+	background: #b6ffed;
+	padding:2em;
+	text-decoration: none;
+	font-size: 1.2em;
+	font-family: "Impact", "Haettenschweiler", "Franklin Gothic Bold", "Arial Black", "sans-serif";
+	color: black;
+}
+
+#searchFilterBar {
+	position: fixed;
+	top: 0%;
+	right: 0%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: nowrap;
+	width: 90%;
+	height: 2em;
+	background: linear-gradient(#f8b62d, #FDE896);
+}
+
+.searchBTNS {
+	padding top: 0em;
+	margin-top: 0.2em;
+	
+}
+
+#filterPanel {
+	position: absolute;
+	top: -16em;
+	left: -18em;
+	background: rgba(248,182,45,.6);
+	border: solid 20em rgba(134,134,134,0.4);
+	height: 90%;
+	width: 90%;
+	display: none;
+}
