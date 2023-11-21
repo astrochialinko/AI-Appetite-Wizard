@@ -27,7 +27,7 @@ function populateRecipes(recipes) {
  * Returns:      N/A
  */
 async function getAllRecipes() {
-    let url = urlRoot + "get/recipes/browse";
+    let url = "get/recipes/browse";
     await fetch(url, {
         method: "GET",
         headers: {"Content-Type": "application/json"}
