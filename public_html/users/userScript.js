@@ -40,7 +40,9 @@ function filterSubmint(){
 			names.push(parts[i].name);
 		}
 	}
-	console.log(names);
-	/* send names to server */
+	if(names.length > 0){
+		console.log(names);
+		/* send names to server */
+	}
 	document.getElementById("filterPanel").style.display= "none";
 }
