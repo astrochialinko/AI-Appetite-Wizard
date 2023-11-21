@@ -350,10 +350,10 @@ app.post("/account/login", (req, res) => {
         res.cookie("sessionID", sessionID);
         res.end("Login successful!" + JSON.stringify(results));
       } else {
-        res.end("Incorrect password.");
+        res.status(403).end("Incorrect password.");
       }
     } else {
-      res.end("User not found.");
+      res.status(404).end("User not found.");
     }
   }).catch((err) => {
     console.log(err);
