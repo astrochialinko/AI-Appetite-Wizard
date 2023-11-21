@@ -148,6 +148,7 @@ app.get("/pantry/:username", (req, res) => {
   });
 });
 
+
 /**
  * The following requests involve searching
  *
@@ -157,7 +158,6 @@ app.get("/pantry/:username", (req, res) => {
  * A GET request to browse all recipes
  * A GET request to get a specific recipe
  */
-
 
 
 // GET request for recipes that exactly match the user's pantry
@@ -358,6 +358,49 @@ app.post("/account/login", (req, res) => {
   }).catch((err) => {
     console.log(err);
     res.end("Failed to log in.");
+  });
+});
+
+/**
+ * The following requests involve favorites
+ *
+ * A GET request for the user's favorite recipes
+ * A POST request to add a recipe to the user's favorites
+ */
+
+// GET request for the user's favorite recipes
+app.get("users/favorites/:username", (req, res) => {
+  const username = req.params.username;
+
+  // Find the user in the database
+  let p = Users.find({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
+
+  // Send the user's favorites
+  p.then((user) => {
+    res.send(user.favorites);
+  }).catch((err) => {
+    console.log(err);
+    console.log("There was an issue getting the user's favorites");
+  });
+});
+
+// POST request to add a recipe to the user's favorites
+app.post("/users/add/favorite", (req, res) => {
+  const username = req.body.username;
+  const recipe = req.body.recipe;
+
+  // Find the user in the database
+  let p = Users.find({username: { $regex: new RegExp("^" + username, "i") }}).exec();
+
+  // Add the recipe to the user's favorites
+  p.then((user) => {
+    user.favorites.push(recipe);
+    user.save();
+  }).catch((err) => {
+    console.log(err);
+    console.log("There was an issue adding the recipe to the user's favorites");
   });
 });
 
