@@ -30,12 +30,19 @@ html portion of the user pages
 		<span id= "searchFilterBar" ><!--This is used to set filter, search options  -->
 			<input type= "text" id="search" class="searchBar" >
 			<a href="#" id = "searchBTN" class= "buttom searchBTNS" onclick = "search()" >Search</a>
-			<a href="#" id = "fliterBTN" class= "buttom searchBTNS" onclick = "filter()" >Filter</a>
+			<a href="#" id = "fliterBTN" class= "buttom searchBTNS" onclick = "openFilter()" >Filter</a>
 		</span>
 		<span id= "filterPanel" >
-			<form action="/search/filtered" method= "get"><!-- action need to be updated to match server.-->
-				<table></table>
-			</form>
+			<label class ="boxes">
+					<input class="filterOpt" type="checkbox" name="pantry"  value="1">
+					Pantry</label>
+				<label class ="boxes">
+					<input class="filterOpt" type="checkbox" name="favorites"  value="1">
+					Favorites</label>
+				
+				<!--^^Repeat for all filtes^^-->
+				<!--Needs function filter submit-->
+				<a href="#" class= "buttom" onclick = "filterSubmint() " >Submit</a> 
 		</span>
 		<span class= "Panel">
 			<h1>Recipies</h1>
