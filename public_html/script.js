@@ -5,11 +5,11 @@
 	Javascript for login and new user.
 */
 
-
-const local = "http://localhost:80/"
-const live = "http:/146.190.45.141:80/"
+//IDK why but it doesn't seem like we need a direct path for our fetch. 
+//const local = "http://localhost:80/"
+//const live = "http:/146.190.45.141:80/"
 //"http:/146.190.45.141:80/" swap this for local when ready to used Dig-Ocean
-const urlRoot = live	
+//const urlRoot = local	
 
 
 /* New user is called when client clicks the new user button. 
@@ -22,7 +22,7 @@ function createUser(){
     let pass = document.getElementById("newPass").value;
 
 	if(validateUserForm(name, pass)){
-		let url = urlRoot + "add/user/";
+		let url =  "/add/user/";
 		user = { userName: name , password: pass};
 		//debug console.log(post);
 		fetch(url, {
@@ -36,7 +36,7 @@ function createUser(){
 				//window.alert("User is usered");
 			} else if (response.ok) {
 				//debug 
-				document.getElementById('newUserWarnings').innerHTML=console.log('User successfully added');
+				document.getElementById('newUserWarnings').innerHTML='User successfully added';
 			} else {
 		   //debug console.log('Server returned an error:', response.status);
 			}
@@ -46,7 +46,7 @@ function createUser(){
 		});
 	}
 }
-/* User Login Gets 'name' and 'pass' from the current page 
+/* User Login Gets 'name' and 'pass' from the current page `1`
 and stores them in obj 'user' which is sent to url a mix 
 of urlRoot and account/login   userLogin also takes any errors 
 and displaies them under the login button */
@@ -54,7 +54,7 @@ function userLogin(){
 	let name = document.getElementById("userID").value;
     let pass = document.getElementById("passID").value;
 
-		let url = urlRoot + "account/login";
+		let url =  "/account/login";
 		user = { userName: name , password: pass};
 		fetch(url, {
 			method: 'POST',
@@ -66,12 +66,12 @@ function userLogin(){
 			if (response.status === 403 || response.status === 404) {
 				return response.text()
 			.then( (text) => { 
-					document.getElementById('loginWwarnings').innerHTML= text; 
+					document.getElementById('loginWarnings').innerHTML= text; 
 			});
 			} else if (response.ok) {
-				window.location.href = '/accounts/home.html'
+				window.location.href = '/users/home.html'
 			} else {
-				document.getElementById('loginWwarnings').innerHTML =
+				document.getElementById('loginWarnings').innerHTML =
 					'Server returned an error:'+ response.status ;
 			}
 		})

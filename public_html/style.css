@@ -110,7 +110,7 @@ sub {
 }
 
 .searchBTNS {
-	padding top: 0em;
+	padding-top: 0em;
 	margin-top: 0.2em;
 	
 }
@@ -124,4 +124,10 @@ sub {
 	height: 90%;
 	width: 90%;
 	display: none;
+}
+
+#contentPanel {
+	display: flow;
+	width: auto;
+	height: auto;
 }

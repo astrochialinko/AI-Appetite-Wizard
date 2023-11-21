@@ -31,3 +31,9 @@ good for shadows and highlights
 	align-items: baseline;
 }
 
+.bookshelfPanel{
+    justify-content: space-between !important ;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+}
+
