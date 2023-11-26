@@ -248,7 +248,6 @@ app.get("/get/recipes/browse", (req, res) => {
   });
 });
 
-//This will be the same path as the next app.get we should change them because of that. 
 
 // GET request for recipes based on ingredients
 app.get("/get/recipes/:ingredients", (req, res) => {

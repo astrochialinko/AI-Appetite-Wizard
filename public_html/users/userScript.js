@@ -18,10 +18,11 @@ function populateRecipes(recipes) {
 		console.log("populate: "+ recipes);
         document.getElementById("contentPanel").innerHTML = formatRecipes(r);
 }
+
 /**
  * Function: getAllRecipes
  * Purpose:  This function will make a GET request to the server to get
- *          all recipes.
+ *           all recipes.
  * 
  * Parameters:   N/A
  * Returns:      N/A
@@ -136,14 +137,75 @@ function openPantry(){
 	
 }
 
+/**
+ * Function: getPantry
+ * Purpose:  This function will make a GET request to the server to get
+ *           the user's pantry.
+ * 
+ * NOTE: This is not the final implementation, just a skeleton for testing purposes.
+ *       Also, this code was moved from code.js.
+ * 
+ * Parameters:   N/A
+ * Returns:      N/A
+ */
+
+function getPantry() {
+  var username = document.getElementById("username").value;
+
+  // Change this when going live
+  let url = "http://localhost:80/pantry/" + username;
+
+  let p = fetch(url, {
+      method: "GET",
+      headers: {"Content-Type": "application/json"}
+  });
+
+  p.then((response) => {
+      return response.json();
+  }).then((data) => {
+      window.alert(data);
+  }).catch((err) => {
+      window.alert("Error getting pantry.");
+  });
+}
+
 
 //filterPanel.style.display = (filterPanel.style.display === "none") ? "block" : "none";
 
 /*Update panrty is called after update is clicked on users pantry 
 form it sends all the data to the server to update user's ingredients */
-function updatePantry(){
-	
+
+/**
+ * Function: updatePantry
+ * Purpose:  This function will make a POST request to the server to add
+ *           an ingredient to the user's pantry.
+ * 
+ * NOTE: This is not the final implementation, just a skeleton for testing purposes.
+ *       Also, this code was moved from code.js.
+ * 
+ * Parameters:   N/A
+ * Returns:      N/A
+ */
+function updatePantry() {
+  var ingredient = document.getElementById("ingredient").value;
+  var username = document.getElementById("username").value;
+
+  // Change this when going live
+  let url = "http://localhost:80/pantry/addingredient";
+
+  let p = fetch(url, {
+    method: "POST",
+    body: JSON.stringify({ingredient: ingredient, username: username}),
+    headers: {"Content-Type": "application/json"}
+  });
+
+  p.then((response) => {
+    window.alert("Ingredient added to pantry!");
+  }).catch((err) => {
+    window.alert("Error adding ingredient to pantry.");
+  });
 }
+
 /*open Filter just toggoles the */
 function openFilter(){
 	document.getElementById("filterPanel").style.display= "block";
@@ -165,4 +227,115 @@ function filterSubmint(){
 		/* send names to server */
 	}
 	document.getElementById("filterPanel").style.display= "none";
+}
+
+/**
+ * Function: getFavorites
+ * Purpose:  This function will make a GET request to the server to get
+ *           the user's favorites.
+ * 
+ * NOTE: This code was moved from code.js.
+ * 
+ * Parameters:   N/A
+ * Returns:      N/A
+ */
+function getFavorites() {
+  var username = document.getElementById("username").value;
+  let url = urlRoot + "users/favorites/" + username;
+
+  let p = fetch(url, {
+      method: "GET",
+      headers: {"Content-Type": "application/json"}
+  });
+  
+  p.then((response) => {
+      return response.json();
+  }).then((data) => {
+      window.alert("Favorites: " + data);
+  }).catch((err) => {
+      window.alert("Error getting favorites.");
+  });
+}
+
+/**
+* Function: addFavorite
+* Purpose:  This function will make a POST request to the server to add
+*           a recipe to the user's favorites.
+* 
+* NOTE: This code was moved from code.js. 
+*
+* Parameters:   N/A
+* Returns:      N/A
+*/
+function addFavorite() {
+  var username = document.getElementById("username").value;
+  var recipe   = document.getElementById("recipe").value;
+
+  let url = urlRoot + "users/add/favorite";
+
+  let p = fetch(url, {
+      method: "POST",
+      body: JSON.stringify({username: username, recipe: recipe}),
+      headers: {"Content-Type": "application/json"}
+  });
+
+  p.then((response) => {
+      window.alert("Favorite added!");
+  }).catch((err) => {
+      window.alert("Error adding favorite.");
+  });
+}
+
+/**
+ * I think the following code belongs here, as it is related to the user.
+ */
+
+/**
+ * Function: getStrictMatchRecipes
+ * Purpose:  This function will make a GET request to the server to get
+ *           recipes that match exactly what the user has in their pantry.
+ * 
+ * Parameters:   N/A
+ * Returns:      N/A
+ */
+function getStrictMatchRecipes() {
+  var username = document.getElementById("username").value;
+  let url = urlRoot + "get/recipes/match-strict/" + username;
+  let p = fetch(url, {
+      method: "GET",
+      headers: {"Content-Type": "application/json"}
+  });
+  
+  p.then((response) => {
+      return response.json();
+  }).then((data) => {
+      window.alert("Strict Match Recipes: " + data);
+  }).catch((err) => {
+      window.alert("Error getting strict match recipes.");
+  });
+}
+
+/**
+* Function: getRelaxedMatchRecipes
+* Purpose:  This function will make a GET request to the server to get
+*           recipes where the recipes are only missing one or two ingredients.
+* 
+* Parameters:   N/A
+* Returns:      N/A
+*/
+function getRelaxedMatchRecipes() {
+  var username = document.getElementById("username").value;
+  let url = urlRoot + "get/recipes/match-relaxed/" + username;
+  let p = fetch(url, {
+      method: "GET",
+      headers: {"Content-Type": "application/json"}
+  });
+  
+  p.then((response) => {
+      return response.json();
+  }).then((data) => {
+      window.alert("Relaxed Match Recipes: " + data);
+  }).catch((err) => {
+      window.alert("Error getting relaxed match recipes.");
+  });
 }
