@@ -219,7 +219,7 @@ function filterSubmint(){
  */
 function getFavorites() {
   var username = document.getElementById("username").value;
-  let url = urlRoot + "users/favorites/" + username;
+  let url = "users/favorites/" + username;
 
   let p = fetch(url, {
       method: "GET",
@@ -253,7 +253,7 @@ function addFavorite() {
   var username = document.getElementById("username").value;
   var recipe   = document.getElementById("recipe").value;
 
-  let url = urlRoot + "users/add/favorite";
+  let url = "users/add/favorite";
 
   let p = fetch(url, {
       method: "POST",
@@ -286,7 +286,7 @@ function addFavorite() {
  */
 function getStrictMatchRecipes() {
   var username = document.getElementById("username").value;
-  let url = urlRoot + "get/recipes/match-strict/" + username;
+  let url = "get/recipes/match-strict/" + username;
   let p = fetch(url, {
       method: "GET",
       headers: {"Content-Type": "application/json"}
@@ -317,7 +317,7 @@ function getStrictMatchRecipes() {
 */
 function getRelaxedMatchRecipes() {
   var username = document.getElementById("username").value;
-  let url = urlRoot + "get/recipes/match-relaxed/" + username;
+  let url = "get/recipes/match-relaxed/" + username;
   let p = fetch(url, {
       method: "GET",
       headers: {"Content-Type": "application/json"}
@@ -339,7 +339,7 @@ function getRelaxedMatchRecipes() {
 }
 
 function logOut() {
-    let url = urlRoot + "account/logout";
+    let url = "account/logout";
     let p = fetch(url, {
         method: "POST",
         headers: {"Content-Type": "application/json"}

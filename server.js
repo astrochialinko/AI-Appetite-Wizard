@@ -395,9 +395,6 @@ app.post("/account/logout", (req, res) => {
   } else {
     res.status(404).end("User not found.");
   }
-}).catch((err) => {
-  console.log(err);
-  res.status(500).end("Server encountered an issue when attmepting to log you out.");
 });
 
 /**
