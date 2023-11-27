@@ -124,9 +124,11 @@ app.post("/pantry/addingredient", (req, res) => {
   p.then((user) => {
     user.pantry.push(ingredient);
     user.save();
+  }).then(() => {
+    res.status(201).send("Ingredient added to pantry!");  // 201 is created status
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue adding the ingredient to the pantry");
+    res.status(500).send("Error adding ingredient to pantry."); // 500 is internal server error
   });
 });
 
@@ -141,10 +143,10 @@ app.get("/pantry/:username", (req, res) => {
 
   // Send the user's pantry
   p.then((user) => {
-    res.send(user.pantry);
+    res.status(200).json(user.pantry);
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue getting the user's pantry");
+    res.status(500).send("There was an issue getting the user's pantry");
   });
 });
 
@@ -176,14 +178,18 @@ app.get("/get/recipes/match-strict/:username", (req, res) => {
       ingredients: { $all: user.pantry, $size: user.pantry.length },
     }).exec();
     p1.then((recipes) => {
-      res.send(recipes);
+      if (recipes.length > 0) {
+        res.status(200).json(recipes);
+      } else {
+        res.status(404).send("No recipes found");
+      }
     }).catch((err) => {
       console.log(err);
-      console.log("There was an issue getting the recipes");
+      res.status(500).send("There was an issue getting the recipes");
     });
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue getting the user");
+    res.status(404).send("There was an issue getting the user");
   });
 });
 
@@ -223,14 +229,19 @@ app.get("/get/recipes/match-relaxed/:username", (req, res) => {
           filteredRecipes.push(recipe);
         }
       });
-      res.send(filteredRecipes);
+      
+      if (filteredRecipes.length > 0) {
+        res.status(200).json(filteredRecipes);
+      } else {
+        res.status(404).send("No recipes found");
+      }
     }).catch((err) => {
       console.log(err);
-      console.log("There was an issue getting the recipes");
+      res.status(500).send("There was an issue getting the recipes");
     });
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue getting the user");
+    res.status(404).send("There was an issue getting the user");
   });
 });
 
@@ -241,10 +252,14 @@ app.get("/get/recipes/browse", (req, res) => {
 
   // Send the recipes
   p.then((recipes) => {
-    res.send(recipes);
+    if (recipes) {
+      res.status(200).json(recipes);
+    } else {
+      res.status(404).send("No recipes found");
+    }
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue getting the recipes");
+    res.status(500).send("There was an issue getting the recipes");
   });
 });
 
@@ -258,10 +273,14 @@ app.get("/get/recipes/:ingredients", (req, res) => {
 
   // Send the recipes
   p.then((recipes) => {
-    res.send(recipes);
+    if (recipes.length > 0) {
+      res.status(200).json(recipes);
+    } else {
+      res.status(404).send("No recipes found with the specified ingredient");
+    }
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue getting the recipes");
+    res.status(500).send("There was an issue getting the recipes");
   });
 });
 
@@ -276,10 +295,14 @@ app.get("/search/recipes/:term", (req, res) => {
 
   // Send the recipe
   p.then((recipe) => {
-    res.send(recipe);
+    if (recipe.length > 0) {
+      res.status(200).json(recipe);
+    } else {
+      res.status(404).send("No recipes found with the search term");
+    }
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue getting the recipe");
+    res.status(500).send("There was an issue getting the recipe");
   });
 });
 
@@ -313,7 +336,7 @@ app.post("/add/user", (req, res) => {
       newUser
         .save()
         .then((result) => {
-          res.end("User created!");
+          res.status(200).end("User created!");
         })
         .catch((err) => {
           console.log(err);
@@ -360,6 +383,23 @@ app.post("/account/login", (req, res) => {
   });
 });
 
+// This route logs out a user
+app.post("/account/logout", (req, res) => {
+  let username = req.cookies.login;
+
+  if (sessions[username]) {
+    delete sessions[username];
+    res.clearCookie("login");
+    res.clearCookie("sessionID");
+    res.end("Logout successful!");
+  } else {
+    res.status(404).end("User not found.");
+  }
+}).catch((err) => {
+  console.log(err);
+  res.status(500).end("Server encountered an issue when attmepting to log you out.");
+});
+
 /**
  * The following requests involve favorites
  *
@@ -378,10 +418,10 @@ app.get("users/favorites/:username", (req, res) => {
 
   // Send the user's favorites
   p.then((user) => {
-    res.send(user.favorites);
+    res.status(200).json(user.favorites);
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue getting the user's favorites");
+    res.status(500).send("There was an issue getting the user's favorites");
   });
 });
 
@@ -397,9 +437,11 @@ app.post("/users/add/favorite", (req, res) => {
   p.then((user) => {
     user.favorites.push(recipe);
     user.save();
+  }).then(() => {
+    res.status(201).send("Recipe added to favorites!");  // 201 is created status
   }).catch((err) => {
     console.log(err);
-    console.log("There was an issue adding the recipe to the user's favorites");
+    res.status(500).send("Error adding recipe to favorites."); // 500 is internal server error
   });
 });
 

@@ -29,12 +29,12 @@ async function getAllRecipes() {
         headers: {"Content-Type": "application/json"}
     })
     .then((response) => {
-	    return  response.json();
+	    return response.json();
     }).then((data) => {
         //debug console.log("All Recipes: " + JSON.stringify(data));
 	    return data;
     }).catch((err) => {
-	window.alert("Error getting all recipes. "+err);
+	window.alert("Error getting all recipes " + err);
     });
     return p;
 }
@@ -129,11 +129,15 @@ function getPantry() {
   });
 
   p.then((response) => {
-      return response.json();
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+    }
   }).then((data) => {
-      window.alert(data);
+      return data;
   }).catch((err) => {
-      window.alert("Error getting pantry.");
+      window.alert(err.message);
   });
 }
 
@@ -168,9 +172,15 @@ function updatePantry() {
   });
 
   p.then((response) => {
-    window.alert("Ingredient added to pantry!");
+    if (response.ok) {
+        return response.text();
+    } else {
+        throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+    }
+  }).then(message => {
+    window.alert(message);
   }).catch((err) => {
-    window.alert("Error adding ingredient to pantry.");
+    window.alert(err.message);
   });
 }
 
@@ -217,11 +227,15 @@ function getFavorites() {
   });
   
   p.then((response) => {
-      return response.json();
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+    }
   }).then((data) => {
-      window.alert("Favorites: " + data);
+    return data;
   }).catch((err) => {
-      window.alert("Error getting favorites.");
+    window.alert(err.message);
   });
 }
 
@@ -248,9 +262,13 @@ function addFavorite() {
   });
 
   p.then((response) => {
-      window.alert("Favorite added!");
+    if (response.ok) {
+        window.alert(response.text());
+    } else {
+        throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+    }
   }).catch((err) => {
-      window.alert("Error adding favorite.");
+      window.alert(err.message);
   });
 }
 
@@ -275,11 +293,17 @@ function getStrictMatchRecipes() {
   });
   
   p.then((response) => {
-      return response.json();
+    if (response.ok) {
+        return response.json();
+    } else if (response.status === 404) {
+        throw new Error("No matching recipes found.");
+    } else {
+        throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+    }
   }).then((data) => {
-      window.alert("Strict Match Recipes: " + data);
+      return data;
   }).catch((err) => {
-      window.alert("Error getting strict match recipes.");
+      window.alert(err.message);
   });
 }
 
@@ -300,10 +324,34 @@ function getRelaxedMatchRecipes() {
   });
   
   p.then((response) => {
-      return response.json();
+    if (response.ok) {
+        return response.json();
+    } else if (response.status === 404) {
+        throw new Error("Error getting user.");
+    } else {
+        throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+    }
   }).then((data) => {
-      window.alert("Relaxed Match Recipes: " + data);
+      return data;
   }).catch((err) => {
-      window.alert("Error getting relaxed match recipes.");
+      window.alert(err.message);
   });
+}
+
+function logOut() {
+    let url = urlRoot + "account/logout";
+    let p = fetch(url, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"}
+    });
+
+    p.then((response) => {
+        if (response.ok) {
+            window.location.href = "/index.html";
+        } else {
+            throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+        }
+    }).catch((err) => {
+        window.alert(err.message);
+    });
 }

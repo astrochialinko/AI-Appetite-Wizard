@@ -24,11 +24,17 @@ function getAllRecipes() {
     });
     
     p.then((response) => {
-        return response.json();
+        if (response.ok) {
+            return response.json();
+        } else if (response.status === 404) {
+            throw new Error("No recipes found.");
+        } else {
+            throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+        }
     }).then((data) => {
-        window.alert("All Recipes: " + data);
+        return data;
     }).catch((err) => {
-        window.alert("Error getting all recipes.");
+        window.alert(err.message);
     });
 }
 
@@ -49,11 +55,17 @@ function searchByIngredient() {
     });
     
     p.then((response) => {
-        return response.json();
+        if (response.ok) {
+            return response.json();
+        } else if (response.status === 404) {
+            throw new Error("No recipes found with " + ingredient + ".");
+        } else {
+            throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+        }
     }).then((data) => {
-        window.alert("Recipes with " + ingredient + ": " + data);
+        return data;
     }).catch((err) => {
-        window.alert("Error getting recipes with " + ingredient + ".");
+        window.alert(err.message);
     });
 }
 
@@ -74,10 +86,16 @@ function searchRecipes() {
     });
     
     p.then((response) => {
-        return response.json();
+        if (response.ok) {
+            return response.json();
+        } else if (response.status === 404) {
+            throw new Error("No recipes found with " + term + ".");
+        } else {
+            throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+        }
     }).then((data) => {
-        window.alert("Recipes with " + term + ": " + data);
+        return data;
     }).catch((err) => {
-        window.alert("Error getting recipes with " + term + ".");
+        window.alert(err.message);
     });
 }
