@@ -30,7 +30,10 @@ good for shadows and highlights
 	justify-content: flex-start;
 	align-items: baseline;
 }
-
+.Panel:hover{
+	border: solid 0.8em #FDE896;
+	border-radius: 12% 2%;
+}
 .bookshelfPanel{
     justify-content: space-between !important ;
     align-items: center !important;
