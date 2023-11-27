@@ -128,6 +128,26 @@ sub {
 
 #contentPanel {
 	display: flow;
+	box-sizing: border-box;
 	width: auto;
+	height: 100%;
+	overflow: auto;
+}
+.recipeLink{
+	text-decoration: none;
+}
+.recipeLink:hover{
+	text-decoration: none;
+}
+.smallImage{
+	float:right;
+	width: 10em;
 	height: auto;
+	margin-right: 2em;
+	flex:1;
+}
+.recipeTitles{
+	display:flex;
+	align-content: center;
+	margin-right: 4em;
 }
