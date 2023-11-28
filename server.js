@@ -89,7 +89,7 @@ function authenticate(req, res, next) {
   if (cookie != undefined && cookie.login != undefined) {
     if (
       sessions[cookie.login] != undefined &&
-      sessions[cookie.login].id === cookie.sessionID
+      sessions[cookie.login].id == cookie.sessionID
     ) {
       next();
     } else {
