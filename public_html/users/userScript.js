@@ -339,7 +339,7 @@ function getRelaxedMatchRecipes() {
 }
 
 function logOut() {
-    let url = "account/logout";
+    let url = "/account/logout";
     let p = fetch(url, {
         method: "POST",
         headers: {"Content-Type": "application/json"}
