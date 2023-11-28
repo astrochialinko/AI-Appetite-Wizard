@@ -81,7 +81,6 @@ function removeSession() {
 setInterval(removeSession, 600000); // 81
 
 // Middleware
-app.use(express.static("public_html"));
 app.use(parser.json());
 app.use(cookieParser());
 
@@ -102,6 +101,8 @@ function authenticate(req, res, next) {
 }
 
 app.use("/users/*", authenticate);
+
+app.use(express.static("public_html"));
 
 /**
  * The following requests involve ingredient management
