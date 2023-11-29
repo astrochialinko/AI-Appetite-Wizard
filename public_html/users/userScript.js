@@ -5,7 +5,8 @@
 	Javascript for user.
 */
 
-
+// used to store whatever recipes are on the page 
+var currentRecipes = [];
 
 /*Populate Recipes to contentPanel is used to update the bookshelf page
 with all/search/filter results. */
@@ -32,6 +33,7 @@ async function getAllRecipes() {
 	    return response.json();
     }).then((data) => {
         //debug console.log("All Recipes: " + JSON.stringify(data));
+	    currentRecipes= data;
 	    return data;
     }).catch((err) => {
 	window.alert("Error getting all recipes " + err);
@@ -73,7 +75,44 @@ function minutes2Sting(mins){
 	outString += mins%60+ "m"
 	return outString;
 }
+function openRecipe(name){
+	document.getElementById("recipeBody").style.display= "block";
+	let r;
+	for(r of currentRecipes){ if( r.name === name) break; }
+	//debug console.log(r);
+	document.getElementById("recipeBody").innerHTML = formatFullRecipe(r);
+}
+/*Format Full Recipe is a single recipe 'r' formater 
+used to convert full recipe into HTML code 'htmlOutput' */
+function formatFullRecipe(r){
+	//rHeader bar with title and favorite button, close window, longDesc 
+	let htmlOutput = '<div id ="rHeader"><h1 id="rH1">'+
+		r.name+'</h1> <a href="#" class= "buttom" onclick = "updateFavs()" >Favorite</a>'+
+		'<a href="#" class= "buttom" onclick = "closeRecipe()" >Close</a><p>'+
+		r.long_description+'</p></div>'
+	//rContent image, ing, cook time, difficulty
+	htmlOutput += '<div id ="rContent"><ul id = "ing">';
+	// each ingredient
+	console.log(r.ingredients)
+	//for(let i = 0;  i < r.ingredients.length; i++){
+	for(let i of r.ingredients){
+		 htmlOutput +='<li>'+ i +"</li>"; 
+	} 
+	htmlOutput += '<p id="rCook">Cook Time: '+minutes2Sting(r.cookTime)+'</p>'+ 
+		'<p id ="rDiff">Diffeculty: '+r.difficulty+'</p>'+
+		'<img class="fullImage" src="../img/'
+			+r.images[0]+'" alt="'
+			+r.images[0]+'"></div>';
+	//rSteps if extra picutre else defealt cooking Image
+	htmlOutput += '<div id= "rSteps"><ol>';
+	for(let i of r.instructions){  htmlOutput +='<li>'+ i +"</li>"; }
+	htmlOutput += '</ol></div></div>'
+	return htmlOutput;
+}
 
+function closeRecipe(){
+	document.getElementById("recipeBody").style.display= "none";
+}
 /*open Filter just toggles the */
 function openFilter(){
 	document.getElementById("filterPanel").style.display= "block";
