@@ -23,23 +23,14 @@ var recipeSchema = new mongoose.Schema({
   name: String,
   short_description: String,
   long_description: String,
-  ingredients: [String],
+  ingredients: [String],	
+  instructions: [String],	
   cookTime: Number,
   difficulty: Number,
   images: [String]
 });
 
 var Recipes = mongoose.model("Recipes", recipeSchema);
-
-// Set up the schema for the users
-var userSchema = new mongoose.Schema({
-  username: String,
-  password: String,
-  favorites: [String],
-  pantry: [String],
-});
-
-var Users = mongoose.model("Users", userSchema);
 
 // Middleware
 app.use(express.static("public_html"));
@@ -55,9 +46,11 @@ function uploadFiles(directoryPath) {
       return;
     }
     // Process each file in the directory
-    files.forEach( ( file ) => {
+    files.forEach((file) => {
+      // Check if the file has a .json extension
       if (path.extname(file) == ".JSON") {
-        const filePath = directoryPath + file.name; }
+        const filePath = path.join(directoryPath, file);
+
         // Read the content of the JSON file
         fs.readFile(filePath, "utf8", async(err, data) => {
           if (err) {
@@ -68,9 +61,12 @@ function uploadFiles(directoryPath) {
           // Parse the JSON data
           try {
             const jsonData = JSON.parse(data);
+            // Assuming the JSON structure matches your MongoDB schema
             const newRecipe = new Recipes(jsonData);
 			console.log("Added to DB")
 			  console.log(newRecipe);
+            // Save the new recipe to the database
+            
 			await newRecipe.save()
   			.then(() => {
     			console.log(`Recipe from ${file} added to MongoDB`);
