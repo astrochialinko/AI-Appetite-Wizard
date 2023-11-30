@@ -108,6 +108,7 @@ app.use(express.static("public_html"));
  * The following requests involve ingredient management
  *
  * A POST request to add an ingredient to the user's pantry
+ * A POST request to remove an ingredient from the user's pantry
  * A GET request to get the user's pantry
  */
 
@@ -117,19 +118,46 @@ app.post("/pantry/addingredient", (req, res) => {
   const ingredient = req.body.ingredient;
 
   // Find the user in the database
-  let p = Users.find({
+  let p = Users.findOne({
     username: { $regex: new RegExp("^" + username, "i") },
   }).exec();
 
   // Add the ingredient to the user's pantry
   p.then((user) => {
-    user.pantry.push(ingredient);
-    user.save();
-  }).then(() => {
-    res.status(201).send("Ingredient added to pantry!");  // 201 is created status
+
+    // Filter out ingredients that are already in the pantry
+    const newIngredient = ingredient.filter((item) => !user.pantry.includes(item));
+
+    if (newIngredient.length > 0) {
+      user.pantry.push(ingredient);
+      user.save();
+      res.status(201).send("Ingredient added to pantry!");  // 201 is created status
+    } else {
+      res.status(403).send("Ingredient already in pantry!");
+    }
   }).catch((err) => {
     console.log(err);
     res.status(500).send("Error adding ingredient to pantry."); // 500 is internal server error
+  });
+});
+
+// POST request to remove an ingredient from the user's pantry
+app.post("/pantry/removeingredient", (req, res) => {
+  const username = req.body.username;
+  const ingredient = req.body.ingredient;
+
+  let p = Users.findOne({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
+
+  p.then((user) => {
+    // Filter out the ingredient from the user's pantry
+    user.pantry = user.pantry.filter((item) => !ingredient.includes(item));
+    user.save();
+    res.status(200).send("Ingredient successfully removed from pantry!");
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send("There was an issue removing the ingredient from the pantry");
   });
 });
 

@@ -136,21 +136,36 @@ function filterSubmint(){
 	document.getElementById("filterPanel").style.display= "none";
 }
 
-/*This function will be called when open pantry is clicked on the 
- user's home page from here it opens a page that lets the user update
- what items are in their pantry. 
-*/
+/**
+ * Function: openPantry
+ * Purpose:  This function will be called when open pantry is clicked on the
+ *           user's home page from here it opens a page that lets the user update
+ *           what items are in their pantry.
+ * 
+ * Parameters:   N/A
+ * Returns:      N/A
+ */
 function openPantry(){
-	
+    document.getElementById("pantryPanel").style.display= "block";
 }
+
+/**
+ * Function: closePantry
+ * Purpose:  This function will close the pantry panel.
+ * 
+ * Parameters:   N/A
+ * Returns:      N/A
+ */
+function closePantry(){
+    document.getElementById("pantryPanel").style.display= "none";
+}
+
+window.onload = getPantry();
 
 /**
  * Function: getPantry
  * Purpose:  This function will make a GET request to the server to get
  *           the user's pantry.
- * 
- * NOTE: This is not the final implementation, just a skeleton for testing purposes.
- *       Also, this code was moved from code.js.
  * 
  * Parameters:   N/A
  * Returns:      N/A
@@ -174,10 +189,57 @@ function getPantry() {
         throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
     }
   }).then((data) => {
-      return data;
+      updatePantryPanel(data);
   }).catch((err) => {
       window.alert(err.message);
   });
+}
+
+/**
+ * Function: updatePantryPanel
+ * Purpose:  This function will update the pantry panel with the ingredients in the user's pantry.
+ * 
+ * Paramters: pantry - Array of ingredients in the user's pantry.
+ */
+function updatePantryPanel(pantry) {
+    if (document.getElementById("pantryPanel") != null) {
+        const myIngredients = document.getElementById("myIngredients");
+        myIngredients.innerHTML = "<h2>My Ingredients</h2> <ul>";
+
+        for (let i = 0; i < pantry.length; i++) {
+            myIngredients.innerHTML += "<li>" + pantry[i] + "</li>";
+        }
+
+        myIngredients.innerHTML += "</ul>";
+    }
+}
+
+window.onload = function() {
+    /*
+        This is hardcoded for testing purposes. This will be replaced with a call to the server
+        to get all of the ingredients that the user can select from.
+    */
+    const ingredients = ["Milk", "Eggs", "Flour"];
+    populateIngredientSelection(ingredients);
+}
+
+/**
+ * Function: populateIngredientSelection
+ * Purpose:  This function will populate the ingredient selection panel with the ingredients
+ *           that the user can select to add to their pantry.
+ * 
+ * Parameters: ingredients - Array of ingredients that the user can select to add to their pantry.
+ * Returns:    N/A 
+ */
+function populateIngredientSelection(ingredients) {
+    if (document.getElementById("ingredientSelection") != null) {
+        let htmlString = "<h2>Add Ingredients</h2>";
+        for (let i = 0; i < ingredients.length; i++) {
+            htmlString += '<input type="checkbox" class="ingredient" id="' + ingredients[i] + '" name="' + ingredients[i] + '">';
+            htmlString += '<label for="' + ingredients[i] + '">' + ingredients[i] + '</label><br>';
+        }
+        document.getElementById("ingredientSelection").innerHTML = htmlString;
+    }
 }
 
 
@@ -198,8 +260,8 @@ form it sends all the data to the server to update user's ingredients */
  * Returns:      N/A
  */
 function updatePantry() {
-  var ingredient = document.getElementById("ingredient").value;
-  var username = document.getElementById("username").value;
+  var ingredient = getSelectedIngredients();
+  var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
 
   // Change this when going live
   let url = "http://localhost:80/pantry/addingredient";
@@ -213,14 +275,64 @@ function updatePantry() {
   p.then((response) => {
     if (response.ok) {
         return response.text();
+    } else if (response.status === 403) {
+        return response.text();
     } else {
         throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
     }
   }).then(message => {
     window.alert(message);
+    window.location.href = "/users/home.html";
   }).catch((err) => {
     window.alert(err.message);
   });
+}
+
+/**
+ * Function: getSelectedIngredients
+ * Purpose:  This function will get all of the ingredients that the user has selected
+ *           to add to their pantry.
+ * 
+ * @returns {Array} of selected ingredients
+ */
+function getSelectedIngredients() {
+    var checkBoxes = document.getElementsByClassName("ingredient");
+    var selectedIngredients = [];
+
+    for (let i = 0; i < checkBoxes.length; i++) {
+        if (checkBoxes[i].checked) {
+            selectedIngredients.push(checkBoxes[i].name);
+        }
+    }
+
+    return selectedIngredients;
+}
+
+function removeIngredients() {
+    var ingredients = getSelectedIngredients();
+    var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+
+    // Change this when going live
+    let url = "http://localhost:80/pantry/removeingredients";
+    
+    let p = fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ingredients: ingredients, username: username}),
+        headers: {"Content-Type": "application/json"}
+    });
+
+    p.then((response) => {
+        if (response.ok) {
+            return response.text();
+        } else {
+            throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+        }
+    }).then(message => {
+        window.alert(message);
+        window.location.href = "/users/home.html";
+    }).catch((err) => {
+        window.alert(err.message);
+    });
 }
 
 /*open Filter just toggoles the */

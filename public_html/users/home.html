@@ -38,6 +38,21 @@ html portion of the user pages
 			
 			<a href="#" id = "myPantry" class= "buttom" onclick = "openPantry()" >Open Pantry</a>  
 		</span>
+
+		<span id="pantryPanel" style="display: none;">
+			<h1 style="text-align: center;">My Pantry</h1>
+			<div id="myIngredients">
+				<!-- This is where the ingredients will be displayed -->
+			</div>
+			<div id="ingredientSelection">
+				<!-- This is where the ingredients will be displayed -->
+			</div>
+			<br>
+			<a href="#" id = "submitPantry" class= "buttom" onclick = "updatePantry()" style="display: inline" >Add Ingredients</a>
+			<a href="#" id = "removePantry" class= "buttom" onclick = "removeIngredient()" style="display: inline" >Remove Ingredients</a>
+			<br>
+			<a href="#" id = "closePantry" class= "buttom" onclick = "closePantry()" >Close Pantry</a>
+		</span>
 	</div>
 </body>
 </html>
