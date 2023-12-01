@@ -47,7 +47,7 @@ var userSchema = new mongoose.Schema({
   // password: String,
   salt: String,
   hash: String,
-  favorites: [String],
+  favorites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Recipes'}],  // Reference to the Recipes schema
   pantry: [String],
 });
 
@@ -454,20 +454,43 @@ app.get("users/favorites/:username", (req, res) => {
 // POST request to add a recipe to the user's favorites
 app.post("/users/add/favorite", (req, res) => {
   const username = req.body.username;
-  const recipe = req.body.recipe;
+  const recipeID = req.body.recipe;
 
   // Find the user in the database
   let p = Users.find({username: { $regex: new RegExp("^" + username, "i") }}).exec();
 
   // Add the recipe to the user's favorites
   p.then((user) => {
-    user.favorites.push(recipe);
-    user.save();
-  }).then(() => {
-    res.status(201).send("Recipe added to favorites!");  // 201 is created status
+    if (!user.favorites.includes(recipeID)) {
+      user.favorites.push(recipeID);
+      user.save();
+      res.status(201).send("Recipe added to favorites!");  // 201 is created status
+    } else {
+      res.status(403).send("Recipe already in favorites!");
+    }
   }).catch((err) => {
     console.log(err);
     res.status(500).send("Error adding recipe to favorites."); // 500 is internal server error
+  });
+});
+
+// POST request to remove a recipe from the user's favorites
+app.post("/remove/favorite", (req, res) => {
+  const username = req.body.username;
+  const recipeID = req.body.recipe;
+
+  let p = Users.findOne({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
+
+  p.then((user) => {
+    // Filter out the recipe from the user's favorites
+    user.favorites = user.favorites.filter((item) => !recipeID.includes(item));
+    user.save();
+    res.status(200).send("Recipe successfully removed from favorites!");
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send("There was an issue removing the recipe from favorites");
   });
 });
 

@@ -87,9 +87,9 @@ used to convert full recipe into HTML code 'htmlOutput' */
 function formatFullRecipe(r){
 	//rHeader bar with title and favorite button, close window, longDesc 
 	let htmlOutput = '<div id ="rHeader"><h1 id="rH1">'+
-		r.name+'</h1> <a href="#" class= "buttom" onclick = "updateFavs()" >Favorite</a>'+
-		'<a href="#" class= "buttom" onclick = "closeRecipe()" >Close</a><p>'+
-		r.long_description+'</p></div>'
+        r.name+'</h1> <a href="#" class= "buttom" data-recipe-id=" ' + r._id + ' " onclick = "addFavorite(this)" >Favorite</a>'+
+        '<a href="#" class= "buttom" onclick = "closeRecipe()" >Close</a><p>'+
+        r.long_description+'</p></div>'
 	//rContent image, ing, cook time, difficulty
 	htmlOutput += '<div id ="rContent"><ul id = "ing">';
 	// each ingredient
@@ -172,7 +172,7 @@ window.onload = getPantry();
  */
 
 function getPantry() {
-  var username = document.getElementById("username").value;
+  var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
 
   // Change this when going live
   let url = "http://localhost:80/pantry/" + username;
@@ -400,11 +400,11 @@ function getFavorites() {
 * Parameters:   N/A
 * Returns:      N/A
 */
-function addFavorite() {
-  var username = document.getElementById("username").value;
-  var recipe   = document.getElementById("recipe").value;
+function addFavorite(recipeID) {
+  var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+  var recipe   = recipeID.getAttribute("data-recipe-id").trim();
 
-  let url = "users/add/favorite";
+  let url = "/add/favorite";
 
   let p = fetch(url, {
       method: "POST",
@@ -414,13 +414,44 @@ function addFavorite() {
 
   p.then((response) => {
     if (response.ok) {
-        window.alert(response.text());
+        return response.text();
+    } else if (response.status === 403) {
+        return response.text();
     } else {
         throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
     }
+  }).then(message => {
+    window.alert(message);
   }).catch((err) => {
-      window.alert(err.message);
+    window.alert(err.message);
   });
+}
+
+function removeFavorite(recipeID) {
+    var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+    var recipe   = recipeID.getAttribute("data-recipe-id").trim();
+
+    let url = "/remove/favorite";
+
+    let p = fetch(url, {
+        method: "POST",
+        body: JSON.stringify({username: username, recipe: recipe}),
+        headers: {"Content-Type": "application/json"}
+    });
+
+    p.then((response) => {
+        if (response.ok) {
+            return response.text();
+        } else if (response.status === 403) {
+            return response.text();
+        } else {
+            throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+        }
+    }).then(message => {
+        window.alert(message);
+    }).catch((err) => {
+        window.alert(err.message);
+    });
 }
 
 /**
