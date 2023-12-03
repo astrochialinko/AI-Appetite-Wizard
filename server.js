@@ -47,7 +47,7 @@ var userSchema = new mongoose.Schema({
   // password: String,
   salt: String,
   hash: String,
-  favorites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Recipes'}],  // Reference to the Recipes schema
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipes" }], // Reference to the Recipes schema
   pantry: [String],
 });
 
@@ -124,14 +124,15 @@ app.post("/pantry/addingredient", (req, res) => {
 
   // Add the ingredient to the user's pantry
   p.then((user) => {
-
     // Filter out ingredients that are already in the pantry
-    const newIngredient = ingredient.filter((item) => !user.pantry.includes(item));
+    const newIngredient = ingredient.filter(
+      (item) => !user.pantry.includes(item)
+    );
 
     if (newIngredient.length > 0) {
       user.pantry.push(ingredient);
       user.save();
-      res.status(201).send("Ingredient added to pantry!");  // 201 is created status
+      res.status(201).send("Ingredient added to pantry!"); // 201 is created status
     } else {
       res.status(403).send("Ingredient already in pantry!");
     }
@@ -157,7 +158,9 @@ app.post("/pantry/removeingredient", (req, res) => {
     res.status(200).send("Ingredient successfully removed from pantry!");
   }).catch((err) => {
     console.log(err);
-    res.status(500).send("There was an issue removing the ingredient from the pantry");
+    res
+      .status(500)
+      .send("There was an issue removing the ingredient from the pantry");
   });
 });
 
@@ -179,7 +182,6 @@ app.get("/pantry/:username", (req, res) => {
   });
 });
 
-
 /**
  * The following requests involve searching
  *
@@ -189,7 +191,6 @@ app.get("/pantry/:username", (req, res) => {
  * A GET request to browse all recipes
  * A GET request to get a specific recipe
  */
-
 
 // GET request for recipes that exactly match the user's pantry
 app.get("/get/recipes/match-strict/:username", (req, res) => {
@@ -258,7 +259,7 @@ app.get("/get/recipes/match-relaxed/:username", (req, res) => {
           filteredRecipes.push(recipe);
         }
       });
-      
+
       if (filteredRecipes.length > 0) {
         res.status(200).json(filteredRecipes);
       } else {
@@ -292,13 +293,14 @@ app.get("/get/recipes/browse", (req, res) => {
   });
 });
 
-
 // GET request for recipes based on ingredients
 app.get("/get/recipes/:ingredients", (req, res) => {
-  const ingredient = req.params.ingredients
+  const ingredient = req.params.ingredients;
 
   // Find the recipes in the database
-  let p = Recipes.find({ ingredients: { $regex: new RegExp(ingredient, "i") } }).exec();
+  let p = Recipes.find({
+    ingredients: { $regex: new RegExp(ingredient, "i") },
+  }).exec();
 
   // Send the recipes
   p.then((recipes) => {
@@ -316,10 +318,16 @@ app.get("/get/recipes/:ingredients", (req, res) => {
 // GET request to get a specific recipe
 app.get("/search/recipes/:term", (req, res) => {
   const term = req.params.term;
+  const regex = new RegExp(term, "i");
 
   // Find the recipe in the database
   let p = Recipes.find({
-    name: { $regex: new RegExp(term, "i") },
+    $or: [
+      { name: regex },
+      { shortDesc: regex },
+      { longDesc: regex },
+      { ingredients: regex },
+    ],
   }).exec();
 
   // Send the recipe
@@ -457,14 +465,16 @@ app.post("/users/add/favorite", (req, res) => {
   const recipeID = req.body.recipe;
 
   // Find the user in the database
-  let p = Users.find({username: { $regex: new RegExp("^" + username, "i") }}).exec();
+  let p = Users.find({
+    username: { $regex: new RegExp("^" + username, "i") },
+  }).exec();
 
   // Add the recipe to the user's favorites
   p.then((user) => {
     if (!user.favorites.includes(recipeID)) {
       user.favorites.push(recipeID);
       user.save();
-      res.status(201).send("Recipe added to favorites!");  // 201 is created status
+      res.status(201).send("Recipe added to favorites!"); // 201 is created status
     } else {
       res.status(403).send("Recipe already in favorites!");
     }
@@ -490,7 +500,9 @@ app.post("/remove/favorite", (req, res) => {
     res.status(200).send("Recipe successfully removed from favorites!");
   }).catch((err) => {
     console.log(err);
-    res.status(500).send("There was an issue removing the recipe from favorites");
+    res
+      .status(500)
+      .send("There was an issue removing the recipe from favorites");
   });
 });
 
