@@ -85,19 +85,25 @@ function openRecipe(name){
 /*Format Full Recipe is a single recipe 'r' formater 
 used to convert full recipe into HTML code 'htmlOutput' */
 function formatFullRecipe(r){
-	//rHeader bar with title and favorite button, close window, longDesc 
-	let htmlOutput = '<div id ="rHeader"><h1 id="rH1">'+
-        r.name+'</h1> <a href="#" class= "buttom" data-recipe-id=" ' + r._id + ' " onclick = "addFavorite(this)" >Favorite</a>'+
-        '<a href="#" class= "buttom" onclick = "closeRecipe()" >Close</a><p>'+
-        r.long_description+'</p></div>'
+	//rHeader bar with title and close window 
+	let htmlOutput = '<div id ="rHeader">'+
+		'<img class="" id="close" src="Close.png" alt = "X" onclick = "closeRecipe()">'+
+		'<h1 id="rH1">'+
+		r.name+'</h1>';
+	//Favorite Icon
+	htmlOutput += '<div id= "favStack">'+
+			'<img class="fav" id="favF" src="Fav_F.gif" alt = "Fav" onClick="addFavorites(\'' + r._id + '\')">'+
+			'<img class="fav" id="favT" src="Fav_T.gif" alt = "Fav" onclick = "removeFavorites(\'' + r.name + '\')">'+
+    		'<img class="fav" id="favA" src="Fav_A.gif" alt = "Fav">  </div>';
+	// Not working yet need a way to check if users favorite 
+	// isFav(r._id);
+	//Long Description
+	htmlOutput += '<p>'+ r.long_description +'</p></div>';
 	//rContent image, ing, cook time, difficulty
 	htmlOutput += '<div id ="rContent"><ul id = "ing">';
-	// each ingredient
-	console.log(r.ingredients)
-	//for(let i = 0;  i < r.ingredients.length; i++){
-	for(let i of r.ingredients){
-		 htmlOutput +='<li>'+ i +"</li>"; 
-	} 
+	// for i of ingredients
+	for(let i of r.ingredients){ htmlOutput +='<li>'+ i +"</li>";  } 
+	//cookTime and diffecutlty
 	htmlOutput += '<p id="rCook">Cook Time: '+minutes2Sting(r.cookTime)+'</p>'+ 
 		'<p id ="rDiff">Diffeculty: '+r.difficulty+'</p>'+
 		'<img class="fullImage" src="../img/'
@@ -109,10 +115,37 @@ function formatFullRecipe(r){
 	htmlOutput += '</ol></div></div>'
 	return htmlOutput;
 }
-
-function closeRecipe(){
-	document.getElementById("recipeBody").style.display= "none";
+//make Fav Icon not fully working yet. 
+function setFavIcon(id){
+	if(isFav(id)){
+		document.getElementById("favF").style.zIndex=0;
+		document.getElementById("favT").style.zIndex=2;
+	}
 }
+//called when close Icon is clicked. 
+function closeRecipe(){ document.getElementById("recipeBody").style.display= "none"; }
+
+//called when Fav_F icon is clicked 
+function addFavorites(name){
+    console.log(name+ " Added")
+    document.getElementById("favA").src="Fav_A.gif";
+	document.getElementById("favA").style.zIndex=3;
+    document.getElementById("favF").style.zIndex=0;
+	setTimeout( function(){
+			document.getElementById("favA").style.zIndex=0;
+			document.getElementById("favT").style.zIndex=2;
+			   },600);
+	//add to users fav
+}
+//called when Fav_T icon is clicked 
+function removeFavorites(name){
+    console.log(name+ " Removed")
+    document.getElementById("favF").style.zIndex=2;
+    document.getElementById("favT").style.zIndex=0;
+	
+}
+
+
 /*open Filter just toggles the */
 function openFilter(){
 	document.getElementById("filterPanel").style.display= "block";
