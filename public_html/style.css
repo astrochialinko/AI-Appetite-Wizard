@@ -38,6 +38,7 @@ sub {
 	align-items: center;
 	justify-items: end;
 	left: 0em;
+	top: 0em;
 	width: 10%;
 	height: 100%;
 	background: #7CDEDF;
