@@ -435,7 +435,7 @@ function getFavorites() {
 */
 function addFavorite(recipeID) {
   var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
-  var recipe   = recipeID.getAttribute("data-recipe-id").trim();
+  var recipe   = recipeID.trim();
 
   let url = "/add/favorite";
 
@@ -462,7 +462,7 @@ function addFavorite(recipeID) {
 
 function removeFavorite(recipeID) {
     var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
-    var recipe   = recipeID.getAttribute("data-recipe-id").trim();
+    var recipe   = recipeID.trim();
 
     let url = "/remove/favorite";
 
