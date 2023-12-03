@@ -224,7 +224,7 @@ function getPantry() {
   }).then((data) => {
       updatePantryPanel(data);
   }).catch((err) => {
-      window.alert(err.message);
+      window.alert("The most annoying errors have no context of where in the code they are. "+err.message);
   });
 }
 
