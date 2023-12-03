@@ -85,6 +85,7 @@ sub {
 	border: solid 0.8em #FFF7C6;
 	border-radius: 12% 2%;
 	overflow: auto;
+	width: fit-content;
 }
 
 .navLinks {
@@ -207,4 +208,32 @@ sub {
 	display: flex;
 	top: -10em;
 	background: rgba(140,228,233,1.00);
+}
+.fav{
+	position: absolute;
+	margin-top: 1em;
+	border-radius: 1em;
+}
+#favF { z-index: 2; }
+
+#favT { z-index: 0; }
+
+#favA{ z-index: 0; }
+
+#favStack{
+	position: absolute;
+  	top: 0em;
+    right: 5em;}
+#close{
+	position: absolute;
+    top: 0em;
+    right: 0em;
+}
+#logo {
+	position: absolute;
+	bottom: .2em;
+	right: .2em;
+	z-index: -1;
+	width: 50%;
+	height: auto;
 }
