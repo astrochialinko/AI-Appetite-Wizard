@@ -146,6 +146,11 @@ sub {
 	height: 100%;
 	overflow: auto;
 }
+
+#contentPanelTxt {
+  padding: 3em;
+}
+
 .recipeLink{
 	text-decoration: none;
 }
