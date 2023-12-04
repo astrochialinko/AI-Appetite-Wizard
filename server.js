@@ -130,7 +130,7 @@ app.post("/pantry/addingredient", (req, res) => {
     );
 
     if (newIngredient.length > 0) {
-      user.pantry.push(ingredient);
+      user.pantry.push(...newIngredient);
       user.save();
       res.status(201).send("Ingredient(s) added to pantry!"); // 201 is created status
     } else {
@@ -143,7 +143,7 @@ app.post("/pantry/addingredient", (req, res) => {
 });
 
 // POST request to remove an ingredient from the user's pantry
-app.post("/pantry/removeingredient", (req, res) => {
+app.post("/pantry/removeingredients", (req, res) => {
   const username = req.body.username;
   const ingredient = req.body.ingredients;
 
@@ -169,7 +169,7 @@ app.get("/pantry/:username", (req, res) => {
   const username = req.params.username;
 
   // Find the user in the database
-  let p = Users.find({
+  let p = Users.findOne({
     username: { $regex: new RegExp("^" + username, "i") },
   }).exec();
 
