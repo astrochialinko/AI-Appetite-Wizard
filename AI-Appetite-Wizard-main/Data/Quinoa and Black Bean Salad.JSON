@@ -1,0 +1,22 @@
+{
+  "name": "Quinoa and Black Bean Salad",
+  "short_description": "A refreshing and protein-packed salad with quinoa, black beans, and vibrant vegetables.",
+  "long_description": "Quinoa and Black Bean Salad is a nutritious and refreshing dish featuring a medley of quinoa, black beans, corn, tomatoes, and cilantro. The salad is dressed with a zesty lime and cumin vinaigrette.",
+  "ingredients": [
+    "1 cup Quinoa (uncooked)",
+    "1 can Black beans, drained and rinsed",
+    "1 cup Corn (frozen or canned)",
+    "2 Tomatoes, diced",
+    "1 Lime, juiced",
+    "1 tsp Cumin",
+    "3 tbsp Olive oil",
+    "1/4 cup Cilantro, fresh, chopped"
+  ],
+  "instructions": [
+    "Cook quinoa and let it cool.",
+    "Mix with black beans, corn, diced tomatoes, lime juice, cumin, olive oil, and chopped cilantro."
+  ],
+  "cookTime": 30,
+  "difficulty": 1,
+  "images": ["QuinoaBBSalad.png"]
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ CSC 337 Final project   "AI App Wiz"
+html portion of the user pages  
+-->
+<html lang = "en-US">
+<head>
+<meta charset="utf-8">
+<!--The sauce that makes the whole thing moble  v v v -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>AI Appetite Wizard</title>
+<link rel="icon" type="image/x-icon" href="../img/WizHat.png">
+<link href="./userStyle.css" rel="stylesheet" type="text/css">
+<link href="../style.css" rel="stylesheet" type="text/css">
+<script src="./userScript.js"></script> 
+</head>
+
+<body>
+	<div id = "navBar"> 
+		<a href="#" class="navLinks" id = "home">Home</a>
+		<a href="./bookshelf.html" class="navLinks" id = "bookshelf">BookShelf</a>
+		<a href="../about.html" class="navLinks" id = "about">About</a>
+		<a href="../help.html" class="navLinks" id = "help">Help</a>
+		<a href="#" class="navLinks" id = "logOut" onclick="logOut()">Log Out</a>
+
+	</div>
+	<div class ="homepage" id = "content">
+		<span class= "Panel">
+			<h1>My Pantry</h1>
+			
+			<a href="#" id = "myPantry" class= "buttom" onclick = "openPantry()" >Open Pantry</a>  
+		</span>
+		<span class= "Panel">
+			<h1>My Favorites</h1>
+			<div id="favortie"></div>
+			<p id="favWarnings"></p>
+			<script>  window.onload = async() =>{
+					let f = await getFavoritesData();
+					populateFavorites(f)};</script> 
+		</span>
+		
+		<span id = "recipeBody"></span>
+
+		<span id="pantryPanel" style="display: none;">
+			<h1 style="text-align: center;">My Pantry</h1>
+			<div id="myIngredients">
+				<!-- This is where the ingredients will be displayed -->
+			</div>
+			<div id="ingredientSelection">
+				<!-- This is where the ingredients will be displayed -->
+			</div>
+			<br>
+			<a href="#" id = "submitPantry" class= "buttom" onclick = "updatePantry()" style="display: inline" >Add Ingredients</a>
+			<a href="#" id = "removePantry" class= "buttom" onclick = "removeIngredients()" style="display: inline" >Remove Ingredients</a>
+			<br>
+			<a href="#" id = "closePantry" class= "buttom" onclick = "closePantry()" >Close Pantry</a>
+		</span>
+	</div>
+</body>
+</html>

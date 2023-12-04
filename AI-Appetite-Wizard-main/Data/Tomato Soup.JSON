@@ -1,0 +1,33 @@
+{
+  "name": "Tomato Soup",
+  "short_description": "A comforting and flavorful tomato soup, perfect for a cozy meal.",
+  "long_description": "Tomato Soup is a classic comfort dish with a rich and savory flavor. This homemade recipe combines tomatoes, onions, and aromatic herbs for a delicious and heartwarming soup.",
+  "ingredients": [
+    "2 tbsp Olive oil",
+    "1 Onion, chopped",
+    "2 cloves Garlic, minced",
+    "28 oz Canned tomatoes (whole or crushed)",
+    "4 cups Vegetable or chicken broth",
+    "1 tsp Sugar",
+    "1 tsp Dried basil",
+    "Salt and pepper to taste",
+    "1/2 cup Heavy cream (optional, for a creamier soup)",
+    "Fresh basil leaves, for garnish (optional)",
+    "Croutons, for serving (optional)"
+  ],
+  "instructions": [
+    "In a large pot, heat olive oil over medium heat.",
+    "Add chopped onions and sauté until translucent.",
+    "Add minced garlic and cook for an additional minute.",
+    "Pour in canned tomatoes and break them apart using a spoon.",
+    "Add vegetable or chicken broth, sugar, dried basil, salt, and pepper.",
+    "Bring the soup to a simmer and let it cook for 15-20 minutes to allow the flavors to meld.",
+    "If you prefer a creamy soup, stir in the heavy cream.",
+    "Use an immersion blender to blend the soup until smooth. Alternatively, transfer to a blender in batches.",
+    "Adjust seasoning as needed.",
+    "Garnish with fresh basil leaves and serve hot with croutons if desired."
+  ],
+  "cookTime": 30,
+  "difficulty": 1,
+  "images": ["TomatoSoup.png"]
+}

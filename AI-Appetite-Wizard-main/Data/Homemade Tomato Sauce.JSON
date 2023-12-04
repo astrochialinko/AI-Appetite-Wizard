@@ -1,0 +1,26 @@
+{
+  "name": "Homemade Tomato Sauce",
+  "short_description": "A rich and flavorful tomato sauce made with fresh tomatoes, garlic, and herbs.",
+  "long_description": "Homemade Tomato Sauce is a versatile and flavorful sauce crafted from fresh tomatoes, garlic, onions, and a blend of aromatic herbs. It's a perfect addition to pasta, pizza, or as a base for various dishes.",
+  "ingredients": [
+    "6 cups Tomatoes, diced",
+    "3 cloves Garlic, minced",
+    "1 Onion, finely chopped",
+    "2 tbsp Olive oil",
+    "1 tsp Basil (dried or fresh)",
+    "1 tsp Oregano (dried)",
+    "1 tsp Salt",
+    "1/2 tsp Pepper"
+  ],
+  "instructions": [
+    "Sauté garlic and onion in olive oil.",
+    "Add tomatoes, basil, oregano, salt, and pepper.",
+    "Simmer until the sauce thickens. Blend for a smoother consistency."
+  ],
+  "cookTime": 40,
+  "difficulty": 1,
+  "images": [
+    "TomatoSauce1.png",
+    "TomatoSauce2.png"
+]
+}

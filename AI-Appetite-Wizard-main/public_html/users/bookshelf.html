@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- Justin Adams, Chia-Lin Ko, and Creed Leichtle
+ CSC 337 Final project   "AI App Wiz"
+html portion of the user pages  
+-->
+<html lang = "en-US">
+<head>
+<meta charset="utf-8">
+<!--The sauce that makes the whole thing moble  v v v -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>AI Appetite Wizard</title>
+<link rel="icon" type="image/x-icon" href="../img/WizHat.png">
+<link href="./userStyle.css" rel="stylesheet" type="text/css">
+<link href="../style.css" rel="stylesheet" type="text/css">
+<script src="./userScript.js"></script> 
+</head>
+
+<body>
+	
+	<div id = "navBar"> 
+		<a href="./home.html" class="navLinks" id = "home">Home</a>
+		<a href="#" class="navLinks" id = "bookshelf">BookShelf</a>
+		<a href="../about.html" class="navLinks" id = "about">About</a>
+		<a href="../help.html" class="navLinks" id = "help">Help</a>
+		<a href="#" class="navLinks" id = "logOut" onclick="logOut()">Log Out</a>
+
+	</div>
+	<div id = "content">
+		<span id= "searchFilterBar" ><!--This is used to set filter, search options  -->
+			<input type= "text" id="search" class="searchBar" >
+			<a href="#" id = "searchBTN" class= "buttom searchBTNS" onclick = "searchRecipes()" >Search</a>
+			<a href="#" id = "fliterBTN" class= "buttom searchBTNS" onclick = "openFilter()" >Filter</a>
+		</span>
+		<span id= "filterPanel" >
+				<label class ="boxes">
+					<input class="filterOpt" type="checkbox" name="pantry"  value="1">
+					Pantry</label>
+				<label class ="boxes">
+					<input class="filterOpt" type="checkbox" name="favorites"  value="1">
+					Favorites</label>
+				
+				<!--^^Repeat for all filtes^^-->
+				<!--Needs funtion filter submit-->
+				<a href="#" class= "buttom" onclick = "filterSubmint() " >Submit</a> 
+		</span>
+		<span id = "contentPanel">
+			 <!-- -->
+			<script>  window.onload = async() =>{
+					let r = await getAllRecipes();
+					populateRecipes(r)};</script>
+		</span>
+		<span id = "recipeBody"></span>
+	</div>
+</body>
+</html>

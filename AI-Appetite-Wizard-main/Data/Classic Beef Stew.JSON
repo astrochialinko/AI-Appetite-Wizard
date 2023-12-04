@@ -1,0 +1,29 @@
+{
+  "name": "Classic Beef Stew",
+  "short_description": "A hearty and comforting beef stew with tender meat and flavorful broth.",
+  "long_description": "Classic Beef Stew is a hearty and comforting dish that features tender beef chunks, potatoes, carrots, and onions simmered in a flavorful broth. This timeless recipe is perfect for chilly days and a family favorite.",
+  "ingredients": [
+    "1.5 lbs Beef (stew meat, cubed)",
+    "3 Potatoes, diced",
+    "3 Carrots, sliced",
+    "1 Onion, chopped",
+    "3 cloves Garlic, minced",
+    "4 cups Beef broth",
+    "2 tbsp Tomato paste",
+    "1 tsp Thyme (dried)",
+    "1 tsp Salt",
+    "1/2 tsp Pepper"
+  ],
+  "instructions": [
+    "Brown beef in a pot.",
+    "Add onions and garlic, then stir in tomato paste and thyme.",
+    "Pour in beef broth and add potatoes and carrots.",
+    "Simmer until beef and vegetables are tender."
+  ],
+  "cookTime": 110,
+  "difficulty": 2,
+  "images": [
+    "BeefStew1.png",
+    "BeefStew2.png"
+]
+}

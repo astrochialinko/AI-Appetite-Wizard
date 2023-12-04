@@ -1,0 +1,26 @@
+{
+  "name": "Grilled Cheese",
+  "short_description": "A classic comfort food featuring melted cheese between slices of golden-brown bread.",
+  "long_description": "Grilled Cheese is a simple yet satisfying comfort food loved by many. This recipe features your choice of cheese melted between slices of buttery, golden-brown bread.",
+  "ingredients": [
+    "8 slices Bread",
+    "8 oz Cheese (cheddar, Swiss, or your favorite melting cheese)",
+    "4 tbsp Butter, softened"
+  ],
+  "instructions": [
+    "Place a skillet or griddle over medium heat.",
+    "Spread butter on one side of each slice of bread.",
+    "Place a slice of bread, butter side down, on the skillet.",
+    "Add a generous amount of cheese on top of the bread.",
+    "Place another slice of bread on top, butter side up.",
+    "Cook until the bottom bread is golden brown and the cheese is melting.",
+    "Flip and cook the other side until golden brown and the cheese is fully melted.",
+    "Repeat for the remaining slices of bread and cheese.",
+    "Slice the grilled cheese sandwiches diagonally and serve hot."
+  ],
+  "cookTime": 15,
+  "difficulty": 1,
+  "images": [ 
+    "GrilledCheese1.png"
+]
+}

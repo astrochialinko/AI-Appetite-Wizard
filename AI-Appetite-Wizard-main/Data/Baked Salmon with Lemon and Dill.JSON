@@ -1,0 +1,26 @@
+{
+  "name": "Baked Salmon with Lemon and Dill",
+  "short_description": "Oven-baked salmon fillets infused with the bright flavors of lemon and dill.",
+  "long_description": "Baked Salmon with Lemon and Dill is an elegant yet easy-to-make dish featuring oven-baked salmon fillets infused with the bright and zesty flavors of lemon and dill. This healthy and delicious recipe is perfect for a special dinner.",
+  "ingredients": [
+    "4 Salmon fillets",
+    "1 Lemon, thinly sliced",
+    "2 tbsp Olive oil",
+    "1 tbsp Dill, fresh, chopped",
+    "2 cloves Garlic, minced",
+    "1/2 tsp Salt",
+    "1/4 tsp Pepper"
+  ],
+  "instructions": [
+    "Preheat oven.",
+    "Place salmon fillets on a baking sheet.",
+    "Drizzle with olive oil, lemon slices, and sprinkle with dill, garlic, salt, and pepper.",
+    "Bake until salmon is cooked through."
+  ],
+  "cookTime": 20,
+  "difficulty": 1,
+  "images": [
+    "BakedSalmon1.png",
+    "BakedSalmon2.png"
+]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Baked Chicken with Herbs",
+  "short_description": "Juicy baked chicken infused with the flavors of rosemary, thyme, and lemon.",
+  "long_description": "Baked Chicken with Herbs is a succulent and aromatic dish featuring chicken seasoned with a blend of rosemary, thyme, and fresh lemon. The result is a golden-brown, flavorful masterpiece.",
+  "ingredients": [
+    "4 Chicken thighs (bone-in)",
+    "3 tbsp Olive oil",
+    "3 cloves Garlic, minced",
+    "1 tsp Rosemary (dried or fresh)",
+    "1 tsp Thyme (dried or fresh)",
+    "1 Lemon, juiced and zested",
+    "1 tsp Salt",
+    "1/2 tsp Pepper"
+  ],
+  "instructions": [
+    "Preheat oven.",
+    "Rub chicken with olive oil, garlic, rosemary, thyme, lemon juice, salt, and pepper.",
+    "Bake until chicken is cooked through and golden brown."
+  ],
+  "cookTime": 45,
+  "difficulty": 2,
+  "images": [
+    "BakedChickenHerbs1.png",
+    "BakedChickenHerbs1.png"
+]
+}
