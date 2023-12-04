@@ -265,7 +265,7 @@ function getPantry() {
   var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
 
   // Change this when going live
-  let url ="http://localhost:80/pantry/"+username;
+  let url ="/pantry/"+username;
 
   let p = fetch(url, {
       method: "GET",
@@ -286,7 +286,7 @@ function getPantry() {
 }
 //
 function getIngredients() {
-  let url = "http://localhost:80/ingredients";
+  let url = "/ingredients";
 
   let p = fetch(url, {
       method: "GET",
@@ -382,7 +382,7 @@ function updatePantry() {
         .join(" ");
 
     // Change this when going live
-    let url = "http://localhost:80/pantry/addingredient";
+    let url = "/pantry/addingredient";
 
     let p = fetch(url, {
         method: "POST",
@@ -438,7 +438,7 @@ function removeIngredients() {
     var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
 
     // Change this when going live
-    let url = "http://localhost:80/pantry/removeingredients";
+    let url = "/pantry/removeingredients";
     
     let p = fetch(url, {
         method: "POST",
