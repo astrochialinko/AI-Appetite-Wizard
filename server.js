@@ -132,20 +132,20 @@ app.post("/pantry/addingredient", (req, res) => {
     if (newIngredient.length > 0) {
       user.pantry.push(ingredient);
       user.save();
-      res.status(201).send("Ingredient added to pantry!"); // 201 is created status
+      res.status(201).send("Ingredient(s) added to pantry!"); // 201 is created status
     } else {
-      res.status(403).send("Ingredient already in pantry!");
+      res.status(403).send("Ingredient(s) already in pantry!");
     }
   }).catch((err) => {
     console.log(err);
-    res.status(500).send("Error adding ingredient to pantry."); // 500 is internal server error
+    res.status(500).send("Error adding ingredient(s) to pantry."); // 500 is internal server error
   });
 });
 
 // POST request to remove an ingredient from the user's pantry
 app.post("/pantry/removeingredient", (req, res) => {
   const username = req.body.username;
-  const ingredient = req.body.ingredient;
+  const ingredient = req.body.ingredients;
 
   let p = Users.findOne({
     username: { $regex: new RegExp("^" + username, "i") },
@@ -155,12 +155,12 @@ app.post("/pantry/removeingredient", (req, res) => {
     // Filter out the ingredient from the user's pantry
     user.pantry = user.pantry.filter((item) => !ingredient.includes(item));
     user.save();
-    res.status(200).send("Ingredient successfully removed from pantry!");
+    res.status(200).send("Ingredient(s) successfully removed from pantry!");
   }).catch((err) => {
     console.log(err);
     res
       .status(500)
-      .send("There was an issue removing the ingredient from the pantry");
+      .send("There was an issue removing the ingredient(s) from the pantry");
   });
 });
 
@@ -180,6 +180,19 @@ app.get("/pantry/:username", (req, res) => {
     console.log(err);
     res.status(500).send("There was an issue getting the user's pantry");
   });
+});
+
+// GET request to get all ingredients
+app.get("/ingredients", (req, res) => {
+  const ingredients = ['Eggs', 'Cheese, shredded', 'Herbs chives, parsley', 'Salt', 'Pepper', 'Salmon', 'Lemon',
+    'Olive oil', 'Dill', 'Garlic', 'Flour', 'Yeast ', 'Chicken thighs', 'Rosemary', 'Thyme',
+    'Lemon' , 'Beef', 'Potatoes', 'Carrots', 'Onion', 'Beef broth', 'Tomato paste', 'slices Bread',
+    'Cheese cheddar, Swiss,', 'Butter', 'Tomatoes', 'Basil', 'Oregano', 'Quinoa', 'Black beans',
+    'Corn', 'Tomatoes', 'Lime', 'Cumin', 'Cilantro', 'Tofu', 'Soy sauce', 'Bell peppers',
+    'Broccoli, florets', 'Ginger, grated', 'Canned tomatoes (whole or crushed)', 'Vegetable or chicken broth',
+    'Sugar', 'Pasta', 'Parmesan cheese'];
+
+  res.status(200).json(ingredients);
 });
 
 /**

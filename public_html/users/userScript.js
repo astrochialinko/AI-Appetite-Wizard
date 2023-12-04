@@ -235,6 +235,8 @@ function filterSubmint() {
  */
 function openPantry() {
   document.getElementById("pantryPanel").style.display = "block";
+  getPantry();
+  getIngredients();
 }
 
 /**
@@ -247,8 +249,6 @@ function openPantry() {
 function closePantry() {
   document.getElementById("pantryPanel").style.display = "none";
 }
-
-window.onload = getPantry();
 
 /**
  * Function: getPantry
@@ -316,14 +316,26 @@ function updatePantryPanel(pantry) {
   }
 }
 
-window.onload = function () {
-  /*
-        This is hardcoded for testing purposes. This will be replaced with a call to the server
-        to get all of the ingredients that the user can select from.
-    */
-  const ingredients = ["Milk", "Eggs", "Flour"];
-  populateIngredientSelection(ingredients);
-};
+function getIngredients() {
+  let url = "http://localhost:80/ingredients";
+
+  let p = fetch(url, {
+      method: "GET",
+      headers: {"Content-Type": "application/json"}
+  });
+
+  p.then((response) => {
+      if (response.ok) {
+          return response.json();
+      } else {
+          throw new Error("Something went wrong on the server: " + response.status + " " + response.statusText);
+      }
+  }).then((ingredients) => {
+      populateIngredientSelection(ingredients);
+  }).catch((err) => {
+      window.alert(err.message);
+  });
+}
 
 /**
  * Function: populateIngredientSelection
@@ -335,22 +347,17 @@ window.onload = function () {
  */
 function populateIngredientSelection(ingredients) {
   if (document.getElementById("ingredientSelection") != null) {
-    let htmlString = "<h2>Add Ingredients</h2>";
-    for (let i = 0; i < ingredients.length; i++) {
-      htmlString +=
-        '<input type="checkbox" class="ingredient" id="' +
-        ingredients[i] +
-        '" name="' +
-        ingredients[i] +
-        '">';
-      htmlString +=
-        '<label for="' +
-        ingredients[i] +
-        '">' +
-        ingredients[i] +
-        "</label><br>";
-    }
-    document.getElementById("ingredientSelection").innerHTML = htmlString;
+      let htmlString = "<h2>Add Ingredients</h2><div class='ingredients-container'>";
+      for (let i = 0; i < ingredients.length; i++) {
+          htmlString += '<div class="ingredient-item">';
+          htmlString += '<input type="checkbox" class="ingredient" id="' + 
+          ingredients[i] + 
+          '" name="' + ingredients[i] + '">';
+          htmlString += '<label for="' + ingredients[i] + '">' + ingredients[i] + '</label>';
+          htmlString += '</div>';  // Close the ingredient-item div
+      }
+      htmlString += "</div>";  // Close the ingredients-container div
+      document.getElementById("ingredientSelection").innerHTML = htmlString;
   }
 }
 
