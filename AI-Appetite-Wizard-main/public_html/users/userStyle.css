@@ -29,6 +29,7 @@ good for shadows and highlights
 	align-content: center;
 	justify-content: flex-start;
 	align-items: baseline;
+	width: auto !important;
 }
 .Panel:hover{
 	border: solid 0.8em #FDE896;

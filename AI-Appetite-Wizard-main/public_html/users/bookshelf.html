@@ -32,13 +32,26 @@ html portion of the user pages
 			<a href="#" id = "fliterBTN" class= "buttom searchBTNS" onclick = "openFilter()" >Filter</a>
 		</span>
 		<span id= "filterPanel" >
+				<span><label class ="radio">
+					<input class="radioOpt" type="radio" name="allRecipes" id="allRecipes" value="1" checked>
+					All Recipes</label>
+				<label class ="radio">
+					<input class="radioOpt" type="radio" name="allRecipes"  value="0">
+					Favorites</label></span>
 				<label class ="boxes">
-					<input class="filterOpt" type="checkbox" name="pantry"  value="1">
-					Pantry</label>
-				<label class ="boxes">
-					<input class="filterOpt" type="checkbox" name="favorites"  value="1">
-					Favorites</label>
-				
+					<input id="pantryFlag" type="checkbox" name="pantry"  value="1">
+					Pantry<!-- Was working on getting less they all pantry 
+						<input id="pantrySlider" type="range" name="pantrySlider" 
+					   min="-3" max="-1" value="-3" oninput="getPSBValue()">
+        			<label id="pan">..</label>--></label>
+				<label>Difficulty
+			 	<input id="diffSlider" type="range" name="difSlider" 
+					   min="1" max="3" value="0" oninput="getFDBValue()">
+        			<label id="diff">..</label></label>
+				<label class = "time">
+					   <input class="filterOpt" id ="ctFeild"  type="number" 
+							  name = "cookTime" value = "" style.width="1em" oninput="getCTFValue()">
+					Max Time<sub>in minutes</sub></label><label id="CT">..</label>
 				<!--^^Repeat for all filtes^^-->
 				<!--Needs funtion filter submit-->
 				<a href="#" class= "buttom" onclick = "filterSubmint() " >Submit</a> 

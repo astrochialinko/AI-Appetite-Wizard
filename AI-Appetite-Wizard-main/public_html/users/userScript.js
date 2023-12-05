@@ -9,6 +9,14 @@
 var currentRecipes = [];
 var favRecipes = [];
 var favs = [];
+var filterValues = { 
+				  difficutly: Number,
+				  cookTime: Number,
+				  allRecipes: Boolean,
+				  pantry: Boolean,
+				  pantryoffset: Number,
+					};
+const urlRedirectLogin = "http://146.190.45.141:80/index.html"
 
 /*Populate Recipes to contentPanel is used to update the bookshelf page
 with all/search/filter results. */
@@ -21,7 +29,6 @@ function populateFavorites(rep) {
 		//debug console.log("populate: "+ rep);
         	document.getElementById("favortie").innerHTML = formatRecipes(rep);
 }
-
 /**
  * Function: getAllRecipes
  * Purpose:  This function will make a GET request to the server to get
@@ -80,7 +87,7 @@ function formatRecipes(recipes){
 and converts 145 => "2h:25m" */
 function minutes2Sting(mins){
 	let outString = '';
-	outString = (Math.floor(mins/60)>1) ? ( Math.floor(mins/60)+"h: " ) : '';
+	outString = (Math.floor(mins/60)>0) ? ( Math.floor(mins/60)+"h: " ) : '';
 	outString += mins%60+ "m"
 	return outString;
 }
@@ -168,29 +175,90 @@ function removeFavorites(id){
 
 /*open Filter just toggles the */
 function openFilter(){
-	document.getElementById("filterPanel").style.display= "block";
+	document.getElementById("filterPanel").style.display= "flex";
 }
-
+// Get Bar Value is used to get value from slider bar and update text feilds 
+function getFDBValue(){
+    let barValue = document.getElementById("diffSlider").value;
+    document.getElementById("diff").innerText = barValue;
+	filterValues.difficutly = barValue;
+	console.log("Set Diff: "+filterValues.difficutly)
+}// Get number value from cook time feild. 
+function getCTFValue(){
+    let number = document.getElementById("ctFeild").value;
+    document.getElementById("CT").innerText = minutes2Sting(number);
+	filterValues.cookTime= number;
+	console.log("Set CT: "+filterValues.cookTime)
+}
 /*filterSubmint collects all the elements of class filterOpt(ions)
 and adds the names to a list ready to be sent to the server. */
-function filterSubmint(){
-	let parts = document.getElementsByClassName("filterOpt");
-	let names = []; 
-	for (let i = 0 ; i < parts.length ; i++){
-		if(parts[i].checked){
-			parts[i].checked = false;
-			names.push(parts[i].name);
-		}
+async function filterSubmint(){
+	let pantryFlag = document.getElementById("pantryFlag").checked;
+	let flag = document.getElementsByClassName("radioOpt")[0].checked;
+	//filterValues.allRecipes=(flag[0].checked)
+	let data;
+	if( flag ){ data = await getAllRecipes(); console.log("All");}
+	else{ data = await  getFavoritesData(); console.log("FAV"); }
+	
+	if(filterValues.difficutly > 0){
+		data = checkValues("diff", data);
+		resetValue("diff"); }
+	if(filterValues.cookTime>0){
+		data = checkValues("CT", data);
+		resetValue("CT"); }
+	if(pantryFlag){
+		document.getElementById("pantryFlag").checked = false;
+		dummyData = "";//search dummyData for recipes with pantry ingredieants. 
 	}
-	if(names.length > 0){
-		console.log(names);
-		/* send names to server */
-	}
+	//debug
+	console.log(data);
+	populateRecipes(data);
+			/* send names to server */
 	document.getElementById("filterPanel").style.display= "none";
 }
 
-
-
+//helper function used to reset the cookTime and Difficulty fields. 
+function resetValue(flag){
+	if(flag == "CT"){
+		console.log("CT: "+filterValues.cookTime)
+		filterValues.cookTime=0; 
+		document.getElementById("ctFeild").value = null;
+		document.getElementById("CT").innerText ="..";
+		return;
+	} else if(flag =="diff"){
+		console.log("Diff: "+filterValues.difficutly)
+		filterValues.difficutly = 0;
+		document.getElementById("diffSlider").value = null;
+		document.getElementById("diff").innerText =".."
+		return;
+	}
+	
+}
+function checkValues(flag, data){
+	let outData =[]
+	if(flag=="CT"){
+			for(let c of data){
+			if(c.cookTime <= filterValues.cookTime){
+				outData.push(c); 
+				console.log("Found C: "+c);}
+			}
+	} else if(flag =="diff"){
+			for(let d of data){
+			if(d.difficulty <= filterValues.difficutly ){
+				outData.push(d); 
+			}
+		}
+	}
+	return outData;
+}
+//overloaded to work with no flag in which case it clears both feilds. 
+//good for when closeing window. 
+function resetAllValue(){
+	resetValue("CT");
+	resetValue("diff");
+	document.getElementsByClassName("radioOpt")[0].checked=true;
+	document.getElementById("pantryFlag").checked= false;
+}
 
 
 
@@ -262,7 +330,7 @@ function closePantry(){ document.getElementById("pantryPanel").style.display= "n
  */
 
 function getPantry() {
-  var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+  var username = getCookieUserName();
 
   // Change this when going live
   let url ="/pantry/"+username;
@@ -302,7 +370,7 @@ function getIngredients() {
   }).then((ingredients) => {
       populateIngredientSelection(ingredients);
   }).catch((err) => {
-      window.alert(err.message);
+      console.log(err.message);
   });
 }
 
@@ -375,11 +443,7 @@ form it sends all the data to the server to update user's ingredients */
  */
 function updatePantry() {
     var ingredient = getSelectedIngredients();
-    var username = document.cookie
-        .split("=")[1]
-        .split(";")[0]
-        .split("%20")
-        .join(" ");
+    var username = getCookieUserName();
 
     // Change this when going live
     let url = "/pantry/addingredient";
@@ -405,11 +469,11 @@ function updatePantry() {
         }
     })
         .then((message) => {
-            window.alert(message);
+            console.log(message);
             window.location.href = "/users/home.html";
         })
         .catch((err) => {
-            window.alert(err.message);
+            console.log(err.message);
         });
 }
 
@@ -435,7 +499,7 @@ function getSelectedIngredients() {
 
 function removeIngredients() {
     var ingredients = getSelectedIngredients();
-    var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+    var username = getCookieUserName();
 
     // Change this when going live
     let url = "/pantry/removeingredients";
@@ -460,29 +524,6 @@ function removeIngredients() {
     });
 }
 
-/*open Filter just toggoles the */
-function openFilter(){
-	document.getElementById("filterPanel").style.display= "block";
-}
-
-/*filterSubmint collects all the elements of class filterOpt(ions)
-and adds the names to a list ready to be sent to the server. */
-function filterSubmint(){
-	let parts = document.getElementsByClassName("filterOpt");
-	let names = []; 
-	for (let i = 0 ; i < parts.length ; i++){
-		if(parts[i].checked){
-			parts[i].checked = false;
-			names.push(parts[i].name);
-		}
-	}
-	if(names.length > 0){
-		console.log(names);
-		/* send names to server */
-	}
-	document.getElementById("filterPanel").style.display= "none";
-}
-
 /**
  * Function: getFavorites
  * Purpose:  This function will make a GET request to the server to get
@@ -494,7 +535,10 @@ function filterSubmint(){
  * Returns:      N/A
  */
 async function getFavorites() {
-  var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+   var username = getCookieUserName();
+  
+  console.log(document.cookie.login);
+  console.log(username);
   let url = "/users/favorites/" + username;
   try {
     let response = await fetch(url, {
@@ -515,9 +559,21 @@ async function getFavorites() {
   }
 	
 }
-
+function getCookieUserName(){
+	//console.log("print Cookies: "+document.cookie);
+	if(document.cookie === 'undefined'){ 
+		location.replace(urlRedirectLogin); }
+	
+	let j= (document.cookie).split(';');
+	//debug console.log("print J1: "+j.findIndex(element => element.includes("login=")));
+	let loc = j.findIndex(element => element.includes("login="));
+	let c = j[loc].split('=')[1];
+	//debug console.log("print C: "+c);
+	return c;
+}
 async function getFavoritesData() {
-  var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+  var username = getCookieUserName();
+  console.log(username);
   let url = "/users/favoritesData/" + username;
 
   try {
@@ -550,7 +606,7 @@ async function getFavoritesData() {
 * Returns:      N/A
 */
 function addFavorite(recipeID) {
-  var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+  var username = getCookieUserName();
   var recipe   = recipeID.trim();
   console.log("adding: "+username+"  "+recipe);
   let url = "/users/add/favorite";
@@ -577,7 +633,7 @@ function addFavorite(recipeID) {
 }
 
 function removeFavorite(recipeID) {
-    var username = document.cookie.split("=")[1].split(";")[0].split("%20").join(" ");
+    var username = getCookieUserName();
     var recipe   = recipeID.trim();
 
     let url = "/remove/favorite";
@@ -616,7 +672,7 @@ function removeFavorite(recipeID) {
  * Returns:      N/A
  */
 function getStrictMatchRecipes() {
-  var username = document.getElementById("username").value;
+  var username = getCookieUserName();
   let url = "get/recipes/match-strict/" + username;
   let p = fetch(url, {
       method: "GET",
@@ -647,7 +703,7 @@ function getStrictMatchRecipes() {
 * Returns:      N/A
 */
 function getRelaxedMatchRecipes() {
-  var username = document.getElementById("username").value;
+  var username = getCookieUserName();
   let url = "get/recipes/match-relaxed/" + username;
   let p = fetch(url, {
       method: "GET",
