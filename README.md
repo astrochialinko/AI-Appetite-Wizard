@@ -12,22 +12,34 @@ The main goals of this page are to take from the user a set of ingredients and r
 
 ## Features
 - Able to input what you have at home 
-- Able to return a list of matching recipes as well as recipes with 1 or 2 ingredients missing. 
+- Able to return a list of matching recipes. 
 - Able to read the recipe files and save them into the database to be searched for
 
 
 ## File Structure
 
 ```     
-CookMe
-    ├── public_html/
-    │     ├── index.html
-    │     ├── style.css
-    │     └── script.js
-    └── server.js
+.
+├── Data/
+│   └── img/
+├── README.md
+├── UploadFiles.js
+├── live.txt
+├── public_html/
+│   ├── about.html
+│   ├── code.js
+│   ├── help.html
+│   ├── index.html
+│   ├── script.js
+│   ├── style.css
+│   └── users/
+│       ├── bookshelf.html
+│       ├── home.html
+│       ├── userScript.js
+│       └── userStyle.css
+└── server.js
 ```  
-## Reference
 
 ## Acknowledgements
 
-We would like to acknowledge Prof. Benjamin Dicken for her guidance and support throughout the semester.
+We would like to acknowledge Prof. Benjamin Dicken for his guidance and support throughout the semester.
