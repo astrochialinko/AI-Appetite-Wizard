@@ -1,20 +1,20 @@
 # AI Appetite Wizard
 
 A recipe website that offers personalized recipe suggestions based on users' available ingredients
-- CSC 337 Final Project (Fall 2023)
-- Authors: Justin Adams, Chia-Lin Ko, and Creed Leichtle
 
-## Overview
+## Demo
 
-It is a recipe site that filters by items the user already has on hand. It will have a few pages basically a recipes library that the user can browse or filter by their own preferences.  It will also offer users an account so they can save their favorite recipes and keep an updated pantry without having to input what they own each time. 
+[![Watch the video](https://img.youtube.com/vi/Dv--k7xqLB4/maxresdefault.jpg)](https://youtu.be/Dv--k7xqLB4)
 
-The main goals of this page are to take from the user a set of ingredients and return a list of possible dishes they can make without the need to make a trip to the store. We want to be able to store all the recipes in a well-organized database and filter by user requests.
+## Our Vision
 
-## Features
-- Able to input what you have at home 
-- Able to return a list of matching recipes. 
-- Able to read the recipe files and save them into the database to be searched for
+Our vision was to create an innovative website that simplifies the hassle of meal planning and cooking. We wanted to bridge the gap between the ingredients you have and the meals you can create, ensuring that no item in your pantry goes to waste.
 
+## What we Offer
+- **Discover Recipes**: Explore a wide range of recipes that fit your dietary preferences and the ingredients you already have.
+- **Manage Your Pantry**: Keep track of what's in your pantry and find recipes based on your current inventory.
+- **Personalize Your Experience**: Save your favorite recipes and access them easily for future reference.
+- **Experiment with Ingredients**: Find recipes that require only a few additional ingredients, making the most of what you already have.
 
 ## File Structure
 
@@ -38,8 +38,11 @@ The main goals of this page are to take from the user a set of ingredients and r
 │       ├── userScript.js
 │       └── userStyle.css
 └── server.js
-```  
+```
+
+## Meet the Team
+AI Appetite Wizard is the brainchild of Justin Adams, Chia-Lin Ko, and Creed Leichtle. We are students at the University of Arizona, and this project was created for our CSC 337 Web Development course.
 
 ## Acknowledgements
 
-We would like to acknowledge Prof. Benjamin Dicken for his guidance and support throughout the semester.
+We would like to acknowledge Prof. Benjamin Dicken and all the TAs for their guidance and support throughout the semester.
